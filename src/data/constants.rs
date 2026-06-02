@@ -10,4 +10,5 @@ pub const WINDOWS_DEFAULT_LENGTH: i32 = 720;
 pub enum Page {
     Default,
     Menu,
+    Balcony,
 }

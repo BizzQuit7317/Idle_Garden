@@ -21,6 +21,7 @@ async fn main() {
 
         match current_page {
             data::constants::Page::Menu => { current_page = screens::menu::draw(); },
+            data::constants::Page::Balcony => { current_page = screens::balcony::draw(); },
             _ => { current_page = screens::default::draw(); } //arm for Default
         }
 
