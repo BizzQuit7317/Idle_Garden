@@ -20,8 +20,8 @@ async fn main() {
     loop {
 
         match current_page {
-            data::constants::Page::Menu => { screens::menu::draw(); },
-            _ => { screens::default::draw(); } //arm for Default
+            data::constants::Page::Menu => { current_page = screens::menu::draw(); },
+            _ => { current_page = screens::default::draw(); } //arm for Default
         }
 
         next_frame().await;
