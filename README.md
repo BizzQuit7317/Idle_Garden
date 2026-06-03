@@ -236,14 +236,13 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
  
 ### Phase 0 — Engine foundations
 - [x] Project skeleton, workspace layout, minimal dependency choices
-- [ ] Decide directory structure (subsystems live in their own dirs from day one)
-- [ ] Core `GameState` struct sketched out with stub fields for known systems
-- [ ] Logging / debug print scaffolding
-- [ ] Other scafholding structs that need to be initially present
+- [x] Decide directory structure (subsystems live in their own dirs from day one)
+- [x] Core `GameState` struct sketched out with stub fields for known systems
+- [x] Other scafholding structs that need to be initially present
 ### Phase 1 — Save/load
-- [ ] Port save/load from `idle_fish`
-- [ ] Fix the missing-file panic (graceful new-game fallback)
-- [ ] Round-trip test: save → load → state matches
+- [x] Port save/load from `idle_fish`
+- [x] Fix the missing-file panic (graceful new-game fallback)
+- [x] Round-trip test: save → load → state matches
 ### Phase 2 — Page architecture & navigation
 - [ ] Page trait / interface (whatever shape ends up right)
 - [ ] Page registry & swapping mechanism
