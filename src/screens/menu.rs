@@ -6,6 +6,7 @@ use crate::systems;
 use crate::utility;
 use crate::screens::screen::{Screen, ScreenTransition};
 use crate::screens::balcony::Balcony;
+use crate::screens::routing::screen_for_player;
 
 pub struct Menu;
 
@@ -24,12 +25,12 @@ impl Screen for Menu {
         if widgets::Button::new("New Game").position(vec2(sw/2.0, sh/2.0)).size(vec2(200.0, 80.0)).ui(&mut root_ui()) {
             *game = systems::game_state::GameState::new();
             utility::file_control::save_game_json(game);
-            return ScreenTransition::Goto(Box::new(Balcony::new()));
+            return ScreenTransition::Goto(screen_for_player(&game.player));
         }
 
         //Continue Button
         if widgets::Button::new("Continue").position(vec2(sw/2.0, sh/3.0)).size(vec2(200.0, 80.0)).ui(&mut root_ui()) {
-            return ScreenTransition::Goto(Box::new(Balcony::new()));
+            return ScreenTransition::Goto(screen_for_player(&game.player));
         }
 
         ScreenTransition::Stay
