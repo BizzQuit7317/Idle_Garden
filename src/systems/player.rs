@@ -12,7 +12,7 @@ pub enum Property {
 pub struct Player {
     pub property: Property,
     pub max_slots: usize,
-    pub slots: Vec<Option<Box<dyn Subsystem>>>
+    pub slots: Vec<Option<Box<dyn Subsystem>>>,
 
     pub cash: f64,
     pub conservation_points: f64,
