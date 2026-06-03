@@ -1,5 +1,5 @@
 use macroquad::prelude::*;
-use macroquad::ui::{root_ui, widgets};
+use macroquad::ui::{root_ui, widgets, hash};
 
 use crate::data;
 use crate::utility;
@@ -38,63 +38,81 @@ impl Screen for Balcony {
             println!("[DBG]Saved Game");
         }
 
-        // Slot buttons — one per slot the player has
-        for (i, slot) in game.player.slots.iter().enumerate() {
-            let label = match slot {
-                Some(s) => s.name().to_string(),
-                None => "Empty".to_string(),
-            };
-            if widgets::Button::new(label.as_str())
-                .position(vec2(sw / 3.0 + i as f32 * 220.0, sh / 2.0))
-                .size(vec2(200.0, 80.0))
-                .ui(&mut root_ui())
-            {
-                match slot {
-                    Some(_) => self.active_slot = Some(i),
-                    None => self.picking_for_slot = Some(i),
+        // Slot buttons — only drawn when no overlay is open
+        if self.active_slot.is_none() && self.picking_for_slot.is_none() {
+            for (i, slot) in game.player.slots.iter().enumerate() {
+                let label = match slot {
+                    Some(s) => s.name().to_string(),
+                    None => "Empty".to_string(),
+                };
+                if widgets::Button::new(label.as_str())
+                    .position(vec2(sw / 3.0 + i as f32 * 220.0, sh / 2.0))
+                    .size(vec2(200.0, 80.0))
+                    .ui(&mut root_ui())
+                {
+                    match slot {
+                        Some(_) => self.active_slot = Some(i),
+                        None => self.picking_for_slot = Some(i),
+                    }
                 }
             }
         }
 
-        // Subsystem overlay — drawn on top when a filled slot is open
+        // Subsystem overlay
         if let Some(i) = self.active_slot {
+            let mut close = false;
+
+            root_ui().window(
+                hash!(),
+                vec2(sw * 0.1, sh * 0.1),
+                vec2(sw * 0.8, sh * 0.8),
+                |ui| {
+                    if ui.button(None, "Close") {
+                        close = true;
+                    }
+                }
+            );
+
             if let Some(Some(subsystem)) = game.player.slots.get_mut(i) {
                 subsystem.draw_overlay();
             }
-            if widgets::Button::new("Close")
-                .position(vec2(sw * 0.7, sh * 0.25))
-                .size(vec2(100.0, 40.0))
-                .ui(&mut root_ui())
-            {
+
+            if close {
                 self.active_slot = None;
             }
         }
 
-        // Picker overlay — drawn on top when an empty slot is clicked
+        // Picker overlay
         if let Some(slot_index) = self.picking_for_slot {
             draw_rectangle(0.0, 0.0, sw, sh, Color::new(0.0, 0.0, 0.0, 0.5));
-            draw_rectangle(sw * 0.2, sh * 0.2, sw * 0.6, sh * 0.6, DARKGRAY);
 
-            let all = available_subsystems();
-            for (i, subsystem) in all.iter().enumerate() {
-                if widgets::Button::new(subsystem.name())
-                    .position(vec2(sw * 0.3, sh * 0.3 + i as f32 * 60.0))
-                    .size(vec2(200.0, 50.0))
-                    .ui(&mut root_ui())
-                {
-                    let chosen_name = subsystem.name().to_string();
-                    game.player.slots[slot_index] = available_subsystems()
-                        .into_iter()
-                        .find(|s| s.name() == chosen_name);
-                    self.picking_for_slot = None;
+            let mut chosen: Option<String> = None;
+            let mut cancelled = false;
+
+            root_ui().window(
+                hash!(),
+                vec2(sw * 0.2, sh * 0.2),
+                vec2(sw * 0.6, sh * 0.6),
+                |ui| {
+                    let all = available_subsystems();
+                    for subsystem in all.iter() {
+                        if ui.button(None, subsystem.name()) {
+                            chosen = Some(subsystem.name().to_string());
+                        }
+                    }
+                    if ui.button(None, "Cancel") {
+                        cancelled = true;
+                    }
                 }
-            }
+            );
 
-            if widgets::Button::new("Cancel")
-                .position(vec2(sw * 0.7, sh * 0.25))
-                .size(vec2(100.0, 40.0))
-                .ui(&mut root_ui())
-            {
+            if let Some(name) = chosen {
+                game.player.slots[slot_index] = available_subsystems()
+                    .into_iter()
+                    .find(|s| s.name() == name);
+                self.picking_for_slot = None;
+            }
+            if cancelled {
                 self.picking_for_slot = None;
             }
         }
