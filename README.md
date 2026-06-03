@@ -244,8 +244,8 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 - [x] Fix the missing-file panic (graceful new-game fallback)
 - [x] Round-trip test: save → load → state matches
 ### Phase 2 — Page architecture & navigation
-- [ ] Page trait / interface (whatever shape ends up right)
-- [ ] Page registry & swapping mechanism
+- [x] Page trait / interface (whatever shape ends up right)
+- [x] Page registry & swapping mechanism
 - [ ] Garden view as the "home" page with clickable hotspots
 - [ ] Stub pages for at least two subsystems to prove swap works
 - [ ] Back-to-garden navigation pattern
