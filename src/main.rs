@@ -7,6 +7,7 @@ mod data;
 mod screens;
 mod systems;
 mod utility;
+mod subsystems;
 
 //#[macroquad::main("Idle Garden")]
 fn window_conf() -> Conf {

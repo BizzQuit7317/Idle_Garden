@@ -1,5 +1,4 @@
 use macroquad::prelude::*;
-use serde::{Serialize, Deserialize};
 
 //Default UI Colors
 pub const DEFAULT_BACKGROUND_COLOR: Color = RED;

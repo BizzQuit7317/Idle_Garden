@@ -5,7 +5,6 @@ use crate::data;
 use crate::systems;
 use crate::utility;
 use crate::screens::screen::{Screen, ScreenTransition};
-use crate::screens::balcony::Balcony;
 use crate::screens::routing::screen_for_player;
 
 pub struct Menu;
