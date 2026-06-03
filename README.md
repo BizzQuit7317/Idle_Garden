@@ -235,7 +235,7 @@ A few rules to keep yourself honest as features get added:
 Written ground-up in Rust with minimal external dependencies where reasonable. Engine before content, architecture before game design.
  
 ### Phase 0 — Engine foundations
-- [ ] Project skeleton, workspace layout, minimal dependency choices
+- [x] Project skeleton, workspace layout, minimal dependency choices
 - [ ] Decide directory structure (subsystems live in their own dirs from day one)
 - [ ] Core `GameState` struct sketched out with stub fields for known systems
 - [ ] Logging / debug print scaffolding
@@ -243,7 +243,6 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 ### Phase 1 — Save/load
 - [ ] Port save/load from `idle_fish`
 - [ ] Fix the missing-file panic (graceful new-game fallback)
-- [ ] Versioned save format so future schema changes don't brick old saves
 - [ ] Round-trip test: save → load → state matches
 ### Phase 2 — Page architecture & navigation
 - [ ] Page trait / interface (whatever shape ends up right)
