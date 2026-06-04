@@ -1,4 +1,5 @@
 use serde::{Serialize, Deserialize};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use crate::systems;
 
@@ -18,6 +19,15 @@ impl GameState {
             tick_rate: 1.0, //default tick rate of 1 per second
             tick_accumulator: 0.0,
         }
+    }
+
+    pub fn process_offline_progress(&mut self) {
+        let seconds_passed: f64 = (SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs() - &self.meta.last_saved_at) as f64;
+        let ticks_passed: u64 = (seconds_passed / self.tick_rate) as u64;
+        for i in 0..ticks_passed {
+            self.tick();
+        }
+        println!("[DBG]Player was away for {} seconds", seconds_passed);
     }
 
     pub fn tick(&mut self) {

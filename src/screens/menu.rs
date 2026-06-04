@@ -29,6 +29,7 @@ impl Screen for Menu {
 
         //Continue Button
         if widgets::Button::new("Continue").position(vec2(sw/2.0, sh/3.0)).size(vec2(200.0, 80.0)).ui(&mut root_ui()) {
+            game.process_offline_progress();
             return ScreenTransition::Goto(screen_for_player(&game.player));
         }
 
