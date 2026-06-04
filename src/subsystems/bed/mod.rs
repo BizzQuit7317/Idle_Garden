@@ -7,7 +7,17 @@ use serde::{Serialize, Deserialize};
 use crate::subsystems::{Subsystem, SubsystemRegistration, ResourceContext, SubsystemOutput};
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct BedSystem;
+pub struct BedSystem {
+    pub soil_quality: u8,
+}
+
+impl BedSystem {
+    pub fn new() -> BedSystem {
+        BedSystem {
+            soil_quality: 0,
+        }
+    }
+}
 
 #[typetag::serde]
 impl Subsystem for BedSystem {
@@ -23,5 +33,5 @@ impl Subsystem for BedSystem {
 }
 
 inventory::submit!(SubsystemRegistration {
-    create: || Box::new(BedSystem),
+    create: || Box::new(BedSystem::new()),
 });

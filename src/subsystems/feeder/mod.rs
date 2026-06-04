@@ -7,7 +7,17 @@ use serde::{Serialize, Deserialize};
 use crate::subsystems::{Subsystem, SubsystemRegistration, ResourceContext, SubsystemOutput};
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct FeederSystem;
+pub struct FeederSystem {
+    pub feed: u8,
+}
+
+impl FeederSystem {
+    pub fn new() -> FeederSystem {
+        FeederSystem {
+            feed: 0;
+        }
+    }
+}
 
 #[typetag::serde]
 impl Subsystem for FeederSystem {
@@ -23,5 +33,5 @@ impl Subsystem for FeederSystem {
 }
 
 inventory::submit!(SubsystemRegistration {
-    create: || Box::new(FeederSystem),
+    create: || Box::new(FeederSystem::new()),
 });
