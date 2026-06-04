@@ -14,7 +14,7 @@ pub struct FeederSystem {
 impl FeederSystem {
     pub fn new() -> FeederSystem {
         FeederSystem {
-            feed: 0;
+            feed: 0,
         }
     }
 }

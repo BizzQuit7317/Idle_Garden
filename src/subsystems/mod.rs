@@ -1,13 +1,17 @@
 use std::fmt::Debug;
+use std::collections::HashMap;
 
 pub struct  ResourceContext {
     pub cash: f64,
     pub conservation_points: f64,
+    pub inventory: HashMap<String, u64>,
 }
 
 pub struct SubsystemOutput {
     pub conservation_delta: f64,
     pub cash_delta: f64,
+    pub items_produced: Vec<(String, u64)>,
+    pub items_consumed: Vec<(String, u64)>,
 }
 
 impl SubsystemOutput {
@@ -15,6 +19,8 @@ impl SubsystemOutput {
         SubsystemOutput {
             conservation_delta: 0.0,
             cash_delta: 0.0,
+            items_produced: Vec::new(),
+            items_consumed: Vec::new(),
         }
     }
 }

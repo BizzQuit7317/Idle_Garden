@@ -5,5 +5,7 @@ pub fn tick(bed: &mut FeederSystem, ctx: &ResourceContext) -> SubsystemOutput {
     SubsystemOutput {
         conservation_delta: 1.0, //feed will tick up conervation
         cash_delta: 0.0,
+        items_produced: vec![],
+        items_consumed: vec![],
     }
 }

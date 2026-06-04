@@ -1,5 +1,6 @@
 use serde::{Serialize, Deserialize};
 use std::time::{SystemTime, UNIX_EPOCH};
+use std::collections::HashMap;
 
 use crate::systems;
 use crate::subsystems::ResourceContext;
@@ -41,6 +42,7 @@ impl GameState {
         let ctx = ResourceContext {
             cash: self.player.cash,
             conservation_points: self.player.conservation_points,
+            inventory: self.player.inventory.items.clone(),
         };
 
         for slot in self.player.slots.iter_mut() {
@@ -48,6 +50,12 @@ impl GameState {
                 let output = subsystem.tick(&ctx);
                 self.player.cash += output.cash_delta;
                 self.player.conservation_points += output.conservation_delta;
+                for (item, amount) in output.items_produced {
+                    self.player.inventory.add(&item, amount);
+                }
+                for (item, amount) in output.items_consumed {
+                    self.player.inventory.remove(&item, amount);
+                }
             }
         }
 
