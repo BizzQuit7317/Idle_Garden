@@ -5,7 +5,7 @@ use crate::data;
 use crate::utility;
 use crate::systems;
 use crate::screens::screen::{Screen, ScreenTransition};
-use crate::subsystems::available_subsystems;
+use crate::subsystems::{available_subsystems, get_item_definition};
 
 pub struct Balcony {
     active_slot: Option<usize>,
@@ -40,6 +40,40 @@ impl Screen for Balcony {
         {
             utility::file_control::save_game_json(game);
             println!("[DBG]Saved Game");
+        }
+
+        // Inventory display — 3 slots along the bottom Need to uppdate too adapt to mutliple slots
+        let inventory_items: Vec<(&String, &u64)> = game.player.inventory.items.iter().collect();
+        let slot_width = sw / 3.0;
+        let slot_y = sh * 0.85;
+
+        for i in 0..3 {
+            let x = i as f32 * slot_width;
+
+            // slot background box
+            draw_rectangle(x + 10.0, slot_y, slot_width - 20.0, sh * 0.12, Color::new(0.0, 0.0, 0.0, 0.4));
+
+            if let Some((id, quantity)) = inventory_items.get(i) {
+                let display_name = get_item_definition(id)
+                    .map(|def| def.display_name)
+                    .unwrap_or(id.as_str());
+
+                draw_text(
+                    &format!("{}: {}", display_name, quantity),
+                    x + 20.0,
+                    slot_y + 30.0,
+                    22.0,
+                    WHITE,
+                );
+            } else {
+                draw_text(
+                    "Empty",
+                    x + 20.0,
+                    slot_y + 30.0,
+                    22.0,
+                    Color::new(0.6, 0.6, 0.6, 1.0),
+                );
+            }
         }
 
         // Slot buttons — only drawn when no overlay is open

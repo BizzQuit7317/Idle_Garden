@@ -4,7 +4,7 @@ mod overlay;
 use macroquad::prelude::*;
 use macroquad::ui::{root_ui, widgets};
 use serde::{Serialize, Deserialize};
-use crate::subsystems::{Subsystem, SubsystemRegistration, ResourceContext, SubsystemOutput};
+use crate::subsystems::{Subsystem, SubsystemRegistration, ResourceContext, SubsystemOutput, ItemDefinition};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FeederSystem {
@@ -35,3 +35,16 @@ impl Subsystem for FeederSystem {
 inventory::submit!(SubsystemRegistration {
     create: || Box::new(FeederSystem::new()),
 });
+
+macro_rules! register_item {
+    ($id:expr, $display:expr, $desc:expr) => {
+        inventory::submit!(ItemDefinition {
+            id: $id,
+            display_name: $display,
+            description: $desc,
+        });
+    }
+}
+
+register_item!("bird_feed", "Bird Feed", "Seeds and scraps left by visiting birds.");
+register_item!("feather", "Feather", "A small feather left behind by a visiting bird.");

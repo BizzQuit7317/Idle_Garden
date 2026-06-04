@@ -13,16 +13,19 @@ impl Inventory {
     pub fn new() -> Self {
         Inventory {
             items: HashMap::new(),
-            capacity: 100,
+            capacity: 3,
         }
     }
 
     pub fn add(&mut self, item: &str, amount: u64) -> bool {
-        if self.total_items() + amount <= self.capacity {
+        let is_new_item = !self.items.contains_key(item);
+        let would_exceed = is_new_item && self.items.len() >= self.capacity as usize;
+        
+        if would_exceed {
+            false
+        } else {
             *self.items.entry(item.to_string()).or_insert(0) += amount;
             true
-        } else {
-            false
         }
     }
 
@@ -37,7 +40,7 @@ impl Inventory {
     }
 
     pub fn total_items(&self) -> u64 {
-        self.items.values().sum()
+        self.items.len() as u64  // number of distinct types, not total quantity
     }
 }
 
@@ -61,6 +64,9 @@ pub struct Player {
 
 impl Player {
     pub fn new() -> Player {
+        let mut inventory = Inventory::new();
+        inventory.add("grass_seed", 5); //Starting the player with 5 grass seeds
+
         Player {
             property: Property::Balcony, //Set the default new user to have the Balcony house
             max_slots: 2,
@@ -69,7 +75,7 @@ impl Player {
             cash: 0.0, //Start with no money
             conservation_points: 0.0, //Start with no conservation
 
-            inventory: Inventory::new(),
+            inventory,
         }
     }
 }

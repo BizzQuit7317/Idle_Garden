@@ -25,6 +25,26 @@ impl SubsystemOutput {
     }
 }
 
+pub struct ItemDefinition {
+    pub id: &'static str,
+    pub display_name: &'static str,
+    pub description: &'static str,
+}
+
+inventory::collect!(ItemDefinition);
+
+pub fn available_items() -> Vec<&'static ItemDefinition> {
+    inventory::iter::<ItemDefinition>
+        .into_iter()
+        .collect()
+}
+
+pub fn get_item_definition(id: &str) -> Option<&'static ItemDefinition> {
+    inventory::iter::<ItemDefinition>
+        .into_iter()
+        .find(|def| def.id == id)
+}
+
 #[typetag::serde(tag = "type")]
 pub trait Subsystem: Debug {
     fn tick(&mut self, ctx: &ResourceContext) -> SubsystemOutput;
