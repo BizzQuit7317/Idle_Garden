@@ -24,12 +24,25 @@ fn window_conf() -> Conf {
 async fn main() {
     let mut game: systems::game_state::GameState = utility::file_control::load_game_json(); //try and load a previous save by default, no save will create a new one.
     let mut current_screen: Box<dyn Screen> = Box::new(Menu::new());
+    let mut ticking = false;
 
     loop {
+        let dt = get_frame_time() as f64;
+
+        if ticking {
+            game.tick_accumulator += dt;
+            while game.tick_accumulator >= game.tick_rate {
+                game.tick_accumulator -= game.tick_rate;
+                game.tick();
+            }
+        }
 
         match current_screen.draw(&mut game) {
             ScreenTransition::Stay => {}
-            ScreenTransition::Goto(next) => current_screen = next,
+            ScreenTransition::Goto(next) => {
+                current_screen = next;
+                ticking = true; //start ticking once we leave the menu
+            },
         }
 
         next_frame().await;

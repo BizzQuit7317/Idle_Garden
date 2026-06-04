@@ -28,6 +28,10 @@ impl Screen for Balcony {
 
         clear_background(data::constants::DEFAULT_BACKGROUND_COLOR);
 
+        //Draw text elements, they will still fall behind root_ui elements
+        draw_text(&format!("Cash: {:.2}", game.player.cash), sw * 0.05, sh * 0.05, 28.0, WHITE);
+        draw_text(&format!("Conservation: {:.2}", game.player.conservation_points), sw * 0.3, sh * 0.05, 28.0, WHITE);
+
         // Save Button
         if widgets::Button::new("Save")
             .position(vec2(sw * 0.25, sh * 0.25))
