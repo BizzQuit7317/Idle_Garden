@@ -67,7 +67,7 @@ impl Screen for Balcony {
             let mut close = false;
 
             root_ui().window(
-                hash!(),
+                hash!("subsystem_overlay"),
                 vec2(sw * 0.1, sh * 0.1),
                 vec2(sw * 0.8, sh * 0.8),
                 |ui| {
@@ -94,7 +94,7 @@ impl Screen for Balcony {
             let mut cancelled = false;
 
             root_ui().window(
-                hash!(),
+                hash!("picker_overlay"),
                 vec2(sw * 0.2, sh * 0.2),
                 vec2(sw * 0.6, sh * 0.6),
                 |ui| {

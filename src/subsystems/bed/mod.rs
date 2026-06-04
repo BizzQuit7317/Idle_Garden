@@ -1,15 +1,23 @@
 use macroquad::prelude::*;
 use macroquad::ui::{root_ui, widgets};
 use serde::{Serialize, Deserialize};
-use crate::subsystems::{Subsystem, SubsystemRegistration};
+use crate::subsystems::{Subsystem, SubsystemRegistration, ResourceContext, SubsystemOutput};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BedSystem;
 
 #[typetag::serde]
 impl Subsystem for BedSystem {
-    fn tick(&mut self, _dt: f64) {}
+    fn tick(&mut self, _ctx: &ResourceContext) -> SubsystemOutput {
+        SubsystemOutput {
+            conservation_delta: 0.0, 
+            cash_delta: 1.0, //Bed will tick up cash
+        }
+
+    }
+
     fn name(&self) -> &str { "bed" }
+
     fn draw_overlay(&mut self) {
         let sw = screen_width();
         let sh = screen_height();
