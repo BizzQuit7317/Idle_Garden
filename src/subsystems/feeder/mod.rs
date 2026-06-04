@@ -1,3 +1,6 @@
+mod system;
+mod overlay;
+
 use macroquad::prelude::*;
 use macroquad::ui::{root_ui, widgets};
 use serde::{Serialize, Deserialize};
@@ -8,21 +11,14 @@ pub struct FeederSystem;
 
 #[typetag::serde]
 impl Subsystem for FeederSystem {
-    fn tick(&mut self, _ctx: &ResourceContext) -> SubsystemOutput {
-        SubsystemOutput {
-            conservation_delta: 1.0, //feed will tick up conervation
-            cash_delta: 0.0,
-        }
-
+    fn tick(&mut self, ctx: &ResourceContext) -> SubsystemOutput {
+        system::tick(self, ctx)
     }
 
     fn name(&self) -> &str { "feeder" }
 
     fn draw_overlay(&mut self) {
-        let sw = screen_width();
-        let sh = screen_height();
-        draw_rectangle(sw * 0.1, sh * 0.1, sw * 0.8, sh * 0.8, BLUE);
-        draw_text("Feeder System", sw * 0.15, sh * 0.2, 32.0, WHITE);
+        overlay::draw();
     }
 }
 
