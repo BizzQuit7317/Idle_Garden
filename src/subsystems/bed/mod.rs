@@ -37,16 +37,18 @@ inventory::submit!(SubsystemRegistration {
 });
 
 macro_rules! register_item {
-    ($id:expr, $display:expr, $desc:expr) => {
+    ($id:expr, $display:expr, $desc:expr, $cash:expr, $conservation:expr) => {
         inventory::submit!(ItemDefinition {
             id: $id,
             display_name: $display,
             description: $desc,
+            cash_value: $cash,
+            conservation_value: $conservation,
         });
     }
 }
 
-register_item!("blue_flower_seed", "Blue Flower Seed", "A small seed for a blue flower.");
-register_item!("flower_flower", "Blue Flower", "A blue flower.");
-register_item!("grass_seeds", "Grass Seeds", "Grass seeds, what else?.");
-register_item!("grass", "Grass", "Regular degular grass buddy.");
+register_item!("blue_flower_seed", "Blue Flower Seed", "A small seed for a blue flower.", 1.0, 20.0);
+register_item!("flower_flower", "Blue Flower", "A blue flower.", 2.0, 3.0);
+register_item!("grass_seeds", "Grass Seeds", "Grass seeds, what else?.", 1.0, 2.0);
+register_item!("grass", "Grass", "Regular degular grass buddy.", 5.0, 6.0);
