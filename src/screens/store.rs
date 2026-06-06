@@ -5,7 +5,7 @@ use crate::data;
 use crate::utility;
 use crate::systems;
 use crate::screens::screen::{Screen, ScreenTransition};
-use crate::screens::routing::screen_for_player;
+use crate::screens::home::Home;
 use crate::screens::player_inventory::PlayerInventory;
 use crate::systems::store_state::StoreItem;
 use crate::subsystems::{available_subsystems, get_item_definition};
@@ -43,7 +43,7 @@ impl Screen for Store {
             .size(vec2(200.0, 80.0))
             .ui(&mut root_ui())
         {
-            return ScreenTransition::Goto(screen_for_player(&game.player));
+            return ScreenTransition::Goto(Box::new(Home::new()));
         }
 
         if widgets::Button::new("Go to Inventory")
@@ -60,6 +60,22 @@ impl Screen for Store {
             .ui(&mut root_ui())
         {
             return ScreenTransition::Goto(Box::new(Store::new()));
+        }
+
+        //Property upgrade
+        let (cash_cost, conservation_cost) = game.player.property.upgrade_cost();
+        //Draw text elements, they will still fall behind root_ui elements
+        draw_text(&format!("Cash Cost: {}", cash_cost), sw * 0.7, sh * 0.1, 28.0, WHITE);
+        draw_text(&format!("Conservation Cost: {}", conservation_cost), sw * 0.7, sh * 0.15, 28.0, WHITE);
+
+        if widgets::Button::new("Upgrade Property")
+            .position(vec2(sw * 0.535, sh * 0.05))
+            .size(vec2(200.0, 80.0))
+            .ui(&mut root_ui())
+        {
+            if !game.player.upgrade_property() {
+                println!("[DBG] Cannot afford");
+            }
         }
 
         //Display the stock

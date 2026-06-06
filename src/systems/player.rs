@@ -50,6 +50,29 @@ pub enum Property {
     Terrace,
 }
 
+impl Property {
+    pub fn upgrade_cost(&self) -> (f64,f64) { //(cash, conservation)
+        match self {
+            Property::Balcony => (1000.0, 5000.0), 
+            Property::Terrace => (5000.0, 20000.0),
+        }
+    }
+
+    pub fn next(&self) -> Option<Property> {
+        match self {
+            Property::Balcony => Some(Property::Terrace),
+            Property::Terrace => None, // already max
+        }
+    }
+
+    pub fn max_slots(&self) -> usize {
+        match self {
+            Property::Balcony => 2, 
+            Property::Terrace => 4,
+        }
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Player {
     pub property: Property,
@@ -67,15 +90,36 @@ impl Player {
         let mut inventory = Inventory::new();
         inventory.add("grass_seeds", 5); //Starting the player with 5 grass seeds
 
+        let property = Property::Balcony;
+        let max_slots = property.max_slots();
+
         Player {
-            property: Property::Balcony, //Set the default new user to have the Balcony house
-            max_slots: 2,
-            slots: vec![None, None], 
+            property, //Set the default new user to have the Balcony house
+            max_slots,
+            slots: (0..max_slots).map(|_| None).collect(), 
 
             cash: 0.0, //Start with no money
             conservation_points: 0.0, //Start with no conservation
 
             inventory,
         }
+    }
+
+    pub fn upgrade_property(&mut self) -> bool {
+        if let Some(next) = self.property.next() {
+            let (cash_cost, conservation_cost) = self.property.upgrade_cost();
+            if self.cash >= cash_cost && self.conservation_points >= conservation_cost {
+                self.cash -= cash_cost;
+                self.conservation_points -= conservation_cost;
+                self.property = next;
+                self.max_slots = self.property.max_slots();
+                // grow the slots vec to match
+                while self.slots.len() < self.max_slots {
+                    self.slots.push(None);
+                }
+                return true;
+            }
+        }
+        false
     }
 }

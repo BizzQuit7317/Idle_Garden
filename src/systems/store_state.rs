@@ -34,7 +34,7 @@ impl Store {
             .map(|def| StoreItem {
                 item_id: def.id.to_string(),
                 price: 1.0,        // placeholder — we'll add base prices to ItemDefinition later
-                quantity_available: 1,
+                quantity_available: 5,
             })
             .collect();
     }

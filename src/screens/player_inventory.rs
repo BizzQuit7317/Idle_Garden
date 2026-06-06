@@ -5,7 +5,7 @@ use crate::data;
 use crate::utility;
 use crate::systems;
 use crate::screens::screen::{Screen, ScreenTransition};
-use crate::screens::routing::screen_for_player;
+use crate::screens::home::Home;
 use crate::screens::store::Store;
 use crate::subsystems::{available_subsystems, get_item_definition};
 
@@ -42,7 +42,7 @@ impl Screen for PlayerInventory {
             .size(vec2(200.0, 80.0))
             .ui(&mut root_ui())
         {
-            return ScreenTransition::Goto(screen_for_player(&game.player));
+            return ScreenTransition::Goto(Box::new(Home::new()));
         }
 
         if widgets::Button::new("Go to Inventory")
