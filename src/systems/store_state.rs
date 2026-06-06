@@ -43,4 +43,22 @@ impl Store {
         self.stock = self.catalogue.clone();
         self.stock.truncate(self.stock_limit as usize);
     }
+
+    pub fn try_buy(&mut self, item_index: usize, player_cash: f64) -> f64 {
+        let price = if let Some(item) = self.stock.get_mut(item_index) {
+            if player_cash >= item.price {
+                item.quantity_available -= 1;
+                item.price
+            } else {
+                println!("[DBG]Could not afford");
+                return 0.0;
+            }
+        } else {
+            println!("[DBG]Could not afford");
+            return 0.0;
+        };
+
+        println!("[DBG]Bought item");
+        price
+    }
 }

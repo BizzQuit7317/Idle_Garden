@@ -78,17 +78,26 @@ impl Screen for Store {
             let x = grid_left + col as f32 * slot_width;
             let y = grid_top + row as f32 * slot_height;
 
-            draw_rectangle(x + 5.0, y + 5.0, slot_width - 10.0, slot_height - 10.0, Color::new(0.0, 0.0, 0.0, 0.4));
-
             if let Some(item) = game.store.stock.get(slot) {
                 let display_name = get_item_definition(&item.item_id)
                     .map(|def| def.display_name)
                     .unwrap_or(&item.item_id);
 
-                draw_text(&format!("{}", display_name), x + 15.0, y + slot_height * 0.35, 22.0, WHITE);
-                draw_text(&format!("£{:.2}", item.price), x + 15.0, y + slot_height * 0.6, 20.0, WHITE);
-                draw_text(&format!("Qty: {}", item.quantity_available), x + 15.0, y + slot_height * 0.8, 18.0, Color::new(0.7, 0.7, 0.7, 1.0));
+                let label = format!("{}\n£{:.2}", display_name, item.price);
+                if widgets::Button::new(label.as_str())
+                    .position(vec2(x + 5.0, y + 5.0))
+                    .size(vec2(slot_width - 10.0, slot_height - 10.0))
+                    .ui(&mut root_ui())
+                {
+                    let cost = game.store.try_buy(slot, game.player.cash);
+                    if cost > 0.0 {
+                        game.player.cash -= cost;
+                        game.player.inventory.add(&game.store.stock[slot].item_id.clone(), 1);
+                        game.store.stock.retain(|item| item.quantity_available > 0);
+                    }
+                }
             } else {
+                draw_rectangle(x + 5.0, y + 5.0, slot_width - 10.0, slot_height - 10.0, Color::new(0.0, 0.0, 0.0, 0.4));
                 draw_text("Empty", x + 15.0, y + slot_height * 0.5, 22.0, Color::new(0.6, 0.6, 0.6, 1.0));
             }
         }

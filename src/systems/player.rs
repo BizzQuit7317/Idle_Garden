@@ -65,7 +65,7 @@ pub struct Player {
 impl Player {
     pub fn new() -> Player {
         let mut inventory = Inventory::new();
-        inventory.add("grass_seed", 5); //Starting the player with 5 grass seeds
+        inventory.add("grass_seeds", 5); //Starting the player with 5 grass seeds
 
         Player {
             property: Property::Balcony, //Set the default new user to have the Balcony house
