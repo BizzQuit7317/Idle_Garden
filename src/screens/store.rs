@@ -1,5 +1,5 @@
 use macroquad::prelude::*;
-use macroquad::ui::{root_ui, widgets, hash};
+use macroquad::ui::{root_ui, widgets};
 
 use crate::data;
 use crate::utility;
@@ -7,13 +7,30 @@ use crate::systems;
 use crate::screens::screen::{Screen, ScreenTransition};
 use crate::screens::home::Home;
 use crate::screens::player_inventory::PlayerInventory;
-use crate::systems::store_state::StoreItem;
-use crate::subsystems::{available_subsystems, get_item_definition};
+use crate::subsystems::get_item_definition;
 
-pub struct Store;
+pub enum StoreTab {
+    CashBuy,
+    ConservationBuy,
+    CashSell,
+    ConservationSell,
+}
+
+struct SlotContext {
+    items: Vec<(String, f64, u32)>,
+    currency_available: f64,
+}
+
+pub struct Store {
+    active_tab: StoreTab,
+}
 
 impl Store {
-    pub fn new() -> Self { Store }
+    pub fn new() -> Self {
+        Store {
+            active_tab: StoreTab::CashBuy,
+        }
+    }
 }
 
 impl Screen for Store {
@@ -23,11 +40,11 @@ impl Screen for Store {
 
         clear_background(data::constants::DEFAULT_BACKGROUND_COLOR);
 
-        //Draw text elements, they will still fall behind root_ui elements
+        // ── Everything below here is UNCHANGED from original ──────────────────
+
         draw_text(&format!("Cash: {:.2}", game.player.cash), sw * 0.05, sh * 0.05, 28.0, WHITE);
         draw_text(&format!("Conservation: {:.2}", game.player.conservation_points), sw * 0.3, sh * 0.05, 28.0, WHITE);
 
-        // Save Button
         if widgets::Button::new("Save")
             .position(vec2(sw * 0.1, sh * 0.15))
             .size(vec2(200.0, 80.0))
@@ -37,7 +54,6 @@ impl Screen for Store {
             println!("[DBG]Saved Game");
         }
 
-        //MAIN TABS
         if widgets::Button::new("Go to Property")
             .position(vec2(sw * 0.3, sh * 0.2))
             .size(vec2(200.0, 80.0))
@@ -62,9 +78,7 @@ impl Screen for Store {
             return ScreenTransition::Goto(Box::new(Store::new()));
         }
 
-        //Property upgrade
         let (cash_cost, conservation_cost) = game.player.property.upgrade_cost();
-        //Draw text elements, they will still fall behind root_ui elements
         draw_text(&format!("Cash Cost: {}", cash_cost), sw * 0.7, sh * 0.1, 28.0, WHITE);
         draw_text(&format!("Conservation Cost: {}", conservation_cost), sw * 0.7, sh * 0.15, 28.0, WHITE);
 
@@ -78,10 +92,83 @@ impl Screen for Store {
             }
         }
 
-        //Display the stock
+        // ── NEW: Store tab buttons, pushed down below existing UI ─────────────
+        // Original grid started at sh * 0.35, tab buttons sit just above that
+        if widgets::Button::new("Buy (Cash)")
+            .position(vec2(sw * 0.1, sh * 0.36))
+            .size(vec2(160.0, 40.0))
+            .ui(&mut root_ui())
+        {
+            self.active_tab = StoreTab::CashBuy;
+        }
+
+        if widgets::Button::new("Buy (Conservation)")
+            .position(vec2(sw * 0.28, sh * 0.36))
+            .size(vec2(190.0, 40.0))
+            .ui(&mut root_ui())
+        {
+            self.active_tab = StoreTab::ConservationBuy;
+        }
+
+        if widgets::Button::new("Sell (Cash)")
+            .position(vec2(sw * 0.53, sh * 0.36))
+            .size(vec2(160.0, 40.0))
+            .ui(&mut root_ui())
+        {
+            self.active_tab = StoreTab::CashSell;
+        }
+
+        if widgets::Button::new("Sell (Conservation)")
+            .position(vec2(sw * 0.71, sh * 0.36))
+            .size(vec2(190.0, 40.0))
+            .ui(&mut root_ui())
+        {
+            self.active_tab = StoreTab::ConservationSell;
+        }
+
+        // ── Build SlotContext ─────────────────────────────────────────────────
+        let ctx = match self.active_tab {
+            StoreTab::CashBuy => SlotContext {
+                items: game.store.stock.iter()
+                    .map(|i| (i.item_id.clone(), i.price, i.quantity_available))
+                    .collect(),
+                currency_available: game.player.cash,
+            },
+            StoreTab::ConservationBuy => SlotContext {
+                // TODO: swap i.price for i.conservation_price once added to StoreItem
+                items: game.store.stock.iter()
+                    .map(|i| (i.item_id.clone(), i.price, i.quantity_available))
+                    .collect(),
+                currency_available: game.player.conservation_points,
+            },
+            StoreTab::CashSell => SlotContext {
+                items: game.player.inventory.items.iter()
+                    .map(|(id, &qty)| {
+                        let price = get_item_definition(id)
+                            .map(|def| def.cash_value)
+                            .unwrap_or(0.0);
+                        (id.clone(), price, qty as u32)
+                    })
+                    .collect(),
+                currency_available: f64::INFINITY,
+            },
+            StoreTab::ConservationSell => SlotContext {
+                items: game.player.inventory.items.iter()
+                    .map(|(id, &qty)| {
+                        let price = get_item_definition(id)
+                            .map(|def| def.conservation_value)
+                            .unwrap_or(0.0);
+                        (id.clone(), price, qty as u32)
+                    })
+                    .collect(),
+                currency_available: f64::INFINITY,
+            },
+        };
+
+        // ── Grid, shifted down to sh * 0.43 to sit below the tab buttons ─────
         let cols = 3usize;
         let rows = (game.store.stock_limit as usize + cols - 1) / cols;
-        let grid_top = sh * 0.35;
+        let grid_top = sh * 0.43;
         let grid_left = sw * 0.1;
         let grid_width = sw * 0.8;
         let grid_height = sh * 0.55;
@@ -94,22 +181,56 @@ impl Screen for Store {
             let x = grid_left + col as f32 * slot_width;
             let y = grid_top + row as f32 * slot_height;
 
-            if let Some(item) = game.store.stock.get(slot) {
-                let display_name = get_item_definition(&item.item_id)
+            if let Some((item_id, price, quantity)) = ctx.items.get(slot) {
+                let display_name = get_item_definition(item_id)
                     .map(|def| def.display_name)
-                    .unwrap_or(&item.item_id);
+                    .unwrap_or(item_id.as_str());
 
-                let label = format!("{}\n£{:.2}\nQTY: {}", display_name, item.price, item.quantity_available);
+                let currency_symbol = match self.active_tab {
+                    StoreTab::CashBuy | StoreTab::CashSell => "£",
+                    StoreTab::ConservationBuy | StoreTab::ConservationSell => "",
+                };
+
+                let label = format!("{}\n{}{:.2}\nQTY: {}", display_name, currency_symbol, price, quantity);
+
                 if widgets::Button::new(label.as_str())
                     .position(vec2(x + 5.0, y + 5.0))
                     .size(vec2(slot_width - 10.0, slot_height - 10.0))
                     .ui(&mut root_ui())
                 {
-                    let cost = game.store.try_buy(slot, game.player.cash);
-                    if cost > 0.0 {
-                        game.player.cash -= cost;
-                        game.player.inventory.add(&game.store.stock[slot].item_id.clone(), 1);
-                        game.store.stock.retain(|item| item.quantity_available > 0);
+                    match self.active_tab {
+                        StoreTab::CashBuy => {
+                            if ctx.currency_available >= *price {
+                                let cost = game.store.try_buy(slot, game.player.cash);
+                                if cost > 0.0 {
+                                    game.player.cash -= cost;
+                                    game.player.inventory.add(item_id, 1);
+                                    game.store.stock.retain(|i| i.quantity_available > 0);
+                                }
+                            }
+                        }
+                        StoreTab::ConservationBuy => {
+                            if ctx.currency_available >= *price {
+                                let cost = game.store.try_buy(slot, game.player.conservation_points);
+                                if cost > 0.0 {
+                                    game.player.conservation_points -= cost;
+                                    game.player.inventory.add(item_id, 1);
+                                    game.store.stock.retain(|i| i.quantity_available > 0);
+                                }
+                            }
+                        }
+                        StoreTab::CashSell => {
+                            if *quantity > 0 {
+                                game.player.inventory.remove(item_id, 1);
+                                game.player.cash += price;
+                            }
+                        }
+                        StoreTab::ConservationSell => {
+                            if *quantity > 0 {
+                                game.player.inventory.remove(item_id, 1);
+                                game.player.conservation_points += price;
+                            }
+                        }
                     }
                 }
             } else {
@@ -118,6 +239,6 @@ impl Screen for Store {
             }
         }
 
-                ScreenTransition::Stay
-            }
-        }
+        ScreenTransition::Stay
+    }
+}

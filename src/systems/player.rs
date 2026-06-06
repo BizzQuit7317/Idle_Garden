@@ -33,6 +33,9 @@ impl Inventory {
         let current = self.items.get(item).copied().unwrap_or(0);
         if current >= amount {
             *self.items.get_mut(item).unwrap() -= amount;
+            if self.items[item] == 0 {
+                self.items.remove(item);
+            }
             true
         } else {
             false
