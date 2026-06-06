@@ -51,6 +51,11 @@ impl Inventory {
 pub enum Property {
     Balcony,
     Terrace,
+    Semi,
+    Detached,
+    Farm,
+    Forest,
+    Continent,
 }
 
 impl Property {
@@ -58,13 +63,23 @@ impl Property {
         match self {
             Property::Balcony => (1000.0, 5000.0), 
             Property::Terrace => (5000.0, 20000.0),
+            Property::Semi => (10000.0, 50000.0),
+            Property::Detached => (50000.0, 100000.0),
+            Property::Farm => (1000000.0, 1000000.0),
+            Property::Forest => (2000000.0, 5000000.0),
+            Property::Continent => (10000000.0, 20000000.0),
         }
     }
 
     pub fn next(&self) -> Option<Property> {
         match self {
             Property::Balcony => Some(Property::Terrace),
-            Property::Terrace => None, // already max
+            Property::Terrace => Some(Property::Semi),
+            Property::Semi => Some(Property::Detached),
+            Property::Detached => Some(Property::Farm),
+            Property::Farm => Some(Property::Forest),
+            Property::Forest => Some(Property::Continent),
+            Property::Continent => None,
         }
     }
 
@@ -72,6 +87,11 @@ impl Property {
         match self {
             Property::Balcony => 2, 
             Property::Terrace => 4,
+            Property::Semi => 6,
+            Property::Detached => 8,
+            Property::Farm => 10,
+            Property::Forest => 12,
+            Property::Continent => 15,
         }
     }
 }
