@@ -83,7 +83,7 @@ impl Screen for Store {
                     .map(|def| def.display_name)
                     .unwrap_or(&item.item_id);
 
-                let label = format!("{}\n£{:.2}", display_name, item.price);
+                let label = format!("{}\n£{:.2}\nQTY: {}", display_name, item.price, item.quantity_available);
                 if widgets::Button::new(label.as_str())
                     .position(vec2(x + 5.0, y + 5.0))
                     .size(vec2(slot_width - 10.0, slot_height - 10.0))
