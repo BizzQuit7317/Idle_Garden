@@ -9,6 +9,7 @@ use crate::subsystems::ResourceContext;
 pub struct  GameState {
     pub player: systems::player::Player,
     pub meta: systems::save_meta::SaveMeta,
+    pub store: systems::store_state::Store,
     pub tick_rate: f64, //seconds per tick
     #[serde(skip, default)] //Sets tick accumulator to 0.0 everytime it gets saved
     pub tick_accumulator: f64, //How much time has built up
@@ -20,6 +21,7 @@ impl GameState {
         GameState {
             player: systems::player::Player::new(),
             meta: systems::save_meta::SaveMeta::new(),
+            store: systems::store_state::Store::new(),
             tick_rate: 1.0, //default tick rate of 1 per second
             tick_accumulator: 0.0,
             max_offline_time: 172800.0, //Default for now to 2 days in seconds of offline time

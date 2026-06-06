@@ -5,7 +5,10 @@ use crate::data;
 use crate::utility;
 use crate::systems;
 use crate::screens::screen::{Screen, ScreenTransition};
+use crate::screens::store::Store;
+use crate::screens::player_inventory::PlayerInventory;
 use crate::subsystems::{available_subsystems, get_item_definition};
+use crate::screens::routing::screen_for_player;
 
 pub struct Balcony {
     active_slot: Option<usize>,
@@ -34,7 +37,7 @@ impl Screen for Balcony {
 
         // Save Button
         if widgets::Button::new("Save")
-            .position(vec2(sw * 0.25, sh * 0.25))
+            .position(vec2(sw * 0.1, sh * 0.15))
             .size(vec2(200.0, 80.0))
             .ui(&mut root_ui())
         {
@@ -42,38 +45,29 @@ impl Screen for Balcony {
             println!("[DBG]Saved Game");
         }
 
-        // Inventory display — 3 slots along the bottom Need to uppdate too adapt to mutliple slots
-        let inventory_items: Vec<(&String, &u64)> = game.player.inventory.items.iter().collect();
-        let slot_width = sw / 3.0;
-        let slot_y = sh * 0.85;
+        //MAIN TABS
+        if widgets::Button::new("Go to Property")
+            .position(vec2(sw * 0.3, sh * 0.2))
+            .size(vec2(200.0, 80.0))
+            .ui(&mut root_ui())
+        {
+            return ScreenTransition::Goto(screen_for_player(&game.player));
+        }
 
-        for i in 0..3 {
-            let x = i as f32 * slot_width;
+        if widgets::Button::new("Go to Inventory")
+            .position(vec2(sw * 0.5, sh * 0.2))
+            .size(vec2(200.0, 80.0))
+            .ui(&mut root_ui())
+        {
+            return ScreenTransition::Goto(Box::new(PlayerInventory::new()));
+        }
 
-            // slot background box
-            draw_rectangle(x + 10.0, slot_y, slot_width - 20.0, sh * 0.12, Color::new(0.0, 0.0, 0.0, 0.4));
-
-            if let Some((id, quantity)) = inventory_items.get(i) {
-                let display_name = get_item_definition(id)
-                    .map(|def| def.display_name)
-                    .unwrap_or(id.as_str());
-
-                draw_text(
-                    &format!("{}: {}", display_name, quantity),
-                    x + 20.0,
-                    slot_y + 30.0,
-                    22.0,
-                    WHITE,
-                );
-            } else {
-                draw_text(
-                    "Empty",
-                    x + 20.0,
-                    slot_y + 30.0,
-                    22.0,
-                    Color::new(0.6, 0.6, 0.6, 1.0),
-                );
-            }
+        if widgets::Button::new("Go to Store")
+            .position(vec2(sw * 0.7, sh * 0.2))
+            .size(vec2(200.0, 80.0))
+            .ui(&mut root_ui())
+        {
+            return ScreenTransition::Goto(Box::new(Store::new()));
         }
 
         // Slot buttons — only drawn when no overlay is open

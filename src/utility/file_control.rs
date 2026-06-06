@@ -19,6 +19,7 @@ pub fn load_game_json() -> systems::game_state::GameState {
     } else {
         let mut game = systems::game_state::GameState::new();
         save_game_json(&mut game);
+        game.store.build_catalogue();
         game // just return the new state directly, no recursion needed
     }
 }

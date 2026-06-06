@@ -26,6 +26,8 @@ async fn main() {
     let mut current_screen: Box<dyn Screen> = Box::new(Menu::new());
     let mut ticking = false;
 
+    
+
     loop {
         let dt = get_frame_time() as f64;
 

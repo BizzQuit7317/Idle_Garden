@@ -13,7 +13,7 @@ impl Inventory {
     pub fn new() -> Self {
         Inventory {
             items: HashMap::new(),
-            capacity: 3,
+            capacity: 9,
         }
     }
 
