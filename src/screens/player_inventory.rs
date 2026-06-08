@@ -33,7 +33,7 @@ impl Screen for PlayerInventory {
             .ui(&mut root_ui())
         {
             utility::file_control::save_game_json(game);
-            println!("[DBG]Saved Game");
+            game.popups.push_toast(String::from("Saved Game"), sw * 0.5, sh * 0.5, 1.0);
         }
 
         //MAIN TABS

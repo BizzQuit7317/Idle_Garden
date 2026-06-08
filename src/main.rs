@@ -31,7 +31,9 @@ async fn main() {
     loop {
         let dt = get_frame_time() as f64;
 
-        if ticking {
+        game.popups.tick(dt);
+        
+        if ticking && !game.paused{
             game.tick_accumulator += dt;
             while game.tick_accumulator >= game.tick_rate {
                 game.tick_accumulator -= game.tick_rate;
@@ -46,6 +48,8 @@ async fn main() {
                 ticking = true; //start ticking once we leave the menu
             },
         }
+
+        game.paused = game.popups.draw();
 
         next_frame().await;
     }

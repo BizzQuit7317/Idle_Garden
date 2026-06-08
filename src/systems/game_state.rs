@@ -14,6 +14,11 @@ pub struct  GameState {
     #[serde(skip, default)] //Sets tick accumulator to 0.0 everytime it gets saved
     pub tick_accumulator: f64, //How much time has built up
     pub max_offline_time: f64, //Maximum time in seconds
+    #[serde(skip)]
+    pub popups: systems::popup::PopupQueue,
+    #[serde(skip)]
+    pub paused: bool,
+
 }
 
 impl GameState {
@@ -25,6 +30,8 @@ impl GameState {
             tick_rate: 1.0, //default tick rate of 1 per second
             tick_accumulator: 0.0,
             max_offline_time: 172800.0, //Default for now to 2 days in seconds of offline time
+            popups: systems::popup::PopupQueue::new(),
+            paused: false, //Gameshould start running not paused
         }
     }
 
@@ -37,7 +44,8 @@ impl GameState {
         for _ in 0..ticks_passed {
             self.tick();
         }
-        println!("[DBG]Player was away for {} seconds", seconds_passed);
+        //println!("[DBG]Player was away for {} seconds", seconds_passed);
+        self.popups.push_modal(vec![format!("You were away for {} seconds", seconds_passed), String::from("Next line to check it works")]);
     }
 
     pub fn tick(&mut self) {

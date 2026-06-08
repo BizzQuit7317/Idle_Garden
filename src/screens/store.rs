@@ -51,7 +51,7 @@ impl Screen for Store {
             .ui(&mut root_ui())
         {
             utility::file_control::save_game_json(game);
-            println!("[DBG]Saved Game");
+            game.popups.push_toast(String::from("Saved Game"), sw * 0.5, sh * 0.5, 1.0);
         }
 
         if widgets::Button::new("Go to Property")
@@ -88,7 +88,7 @@ impl Screen for Store {
             .ui(&mut root_ui())
         {
             if !game.player.upgrade_property() {
-                println!("[DBG] Cannot afford");
+                game.popups.push_toast(String::from("Cannot Afford that buddy"), sw * 0.5, sh * 0.5, 1.0);
             }
         }
 
