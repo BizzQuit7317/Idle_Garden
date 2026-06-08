@@ -125,7 +125,7 @@ impl Screen for Home {
                 vec2(sw * 0.2, sh * 0.2),
                 vec2(sw * 0.6, sh * 0.6),
                 |ui| {
-                    let all = available_subsystems();
+                    let all = available_subsystems(&game.player.property);
                     for subsystem in all.iter() {
                         if ui.button(None, subsystem.name()) {
                             chosen = Some(subsystem.name().to_string());
@@ -138,7 +138,7 @@ impl Screen for Home {
             );
 
             if let Some(name) = chosen {
-                game.player.slots[slot_index] = available_subsystems()
+                game.player.slots[slot_index] = available_subsystems(&game.player.property)
                     .into_iter()
                     .find(|s| s.name() == name);
                 self.picking_for_slot = None;

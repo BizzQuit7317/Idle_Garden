@@ -1,6 +1,8 @@
 use std::fmt::Debug;
 use std::collections::HashMap;
 
+use crate::systems::player::Property;
+
 pub struct  ResourceContext {
     pub cash: f64,
     pub conservation_points: f64,
@@ -56,13 +58,15 @@ pub trait Subsystem: Debug {
 
 pub struct SubsystemRegistration {
     pub create: fn() -> Box<dyn Subsystem>,
+    pub min_property: Property,
 }
 
 inventory::collect!(SubsystemRegistration);
 
-pub fn available_subsystems() -> Vec<Box<dyn Subsystem>> {
+pub fn available_subsystems(player_property: &Property) -> Vec<Box<dyn Subsystem>> {
     inventory::iter::<SubsystemRegistration>
         .into_iter()
+        .filter(|r| r.min_property <= *player_property)
         .map(|r| (r.create)())
         .collect()
 }

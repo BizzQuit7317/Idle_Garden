@@ -47,7 +47,7 @@ impl Inventory {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialOrd, Ord, PartialEq, Eq)]
 pub enum Property {
     Balcony,
     Terrace,

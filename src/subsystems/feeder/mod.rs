@@ -5,6 +5,7 @@ use macroquad::prelude::*;
 use macroquad::ui::{root_ui, widgets};
 use serde::{Serialize, Deserialize};
 use crate::subsystems::{Subsystem, SubsystemRegistration, ResourceContext, SubsystemOutput, ItemDefinition};
+use crate::systems::player::Property;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FeederSystem {
@@ -34,6 +35,7 @@ impl Subsystem for FeederSystem {
 
 inventory::submit!(SubsystemRegistration {
     create: || Box::new(FeederSystem::new()),
+    min_property: Property::Balcony,
 });
 
 macro_rules! register_item {
