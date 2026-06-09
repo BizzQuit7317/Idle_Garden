@@ -14,6 +14,7 @@ pub struct BedSystem {
     pub selected_item: Option<String>, // tracks what the player clicked in inventory
     pub pending_plant: Option<(usize, String)>, // (spot index, item id)
     pub pending_harvest: Option<usize>,
+    pub plant_definitions: Vec<system::PlantDefinition>,
 }
 
 impl BedSystem {
@@ -24,6 +25,7 @@ impl BedSystem {
             selected_item: None,
             pending_plant: None,
             pending_harvest: None,
+            plant_definitions: system::load_plant_definitions(),
         }
     }
 }
