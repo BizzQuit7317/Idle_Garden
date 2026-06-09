@@ -53,7 +53,7 @@ pub fn get_item_definition(id: &str) -> Option<&'static ItemDefinition> {
 pub trait Subsystem: Debug {
     fn tick(&mut self, ctx: &ResourceContext) -> SubsystemOutput;
     fn name(&self) -> &str;
-    fn draw_overlay(&mut self);
+    fn draw_overlay(&mut self, ui: &mut macroquad::ui::Ui, ctx: &ResourceContext);
 }
 
 pub struct SubsystemRegistration {

@@ -28,8 +28,8 @@ impl Subsystem for FeederSystem {
 
     fn name(&self) -> &str { "feeder" }
 
-    fn draw_overlay(&mut self) {
-        overlay::draw();
+    fn draw_overlay(&mut self, ui: &mut macroquad::ui::Ui, ctx: &ResourceContext) {
+        overlay::draw(ui, self, ctx);
     }
 }
 

@@ -10,12 +10,16 @@ use crate::systems::player::Property;
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BedSystem {
     pub soil_quality: u8,
+    pub growing_spots: Vec<system::GrowingSpot>,
+    pub selected_item: Option<String>, // tracks what the player clicked in inventory
 }
 
 impl BedSystem {
     pub fn new() -> BedSystem {
         BedSystem {
             soil_quality: 0,
+            growing_spots: vec![system::GrowingSpot::new(); 9],
+            selected_item: None,
         }
     }
 }
@@ -28,8 +32,8 @@ impl Subsystem for BedSystem {
 
     fn name(&self) -> &str { "bed" }
 
-    fn draw_overlay(&mut self) {
-        overlay::draw();
+    fn draw_overlay(&mut self, ui: &mut macroquad::ui::Ui, ctx: &ResourceContext) {
+        overlay::draw(ui, self, ctx);
     }
 }
 

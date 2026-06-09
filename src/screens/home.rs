@@ -93,19 +93,24 @@ impl Screen for Home {
         if let Some(i) = self.active_slot {
             let mut close = false;
 
-            root_ui().window(
-                hash!("subsystem_overlay"),
-                vec2(sw * 0.1, sh * 0.1),
-                vec2(sw * 0.8, sh * 0.8),
-                |ui| {
-                    if ui.button(None, "Close") {
-                        close = true;
-                    }
-                }
-            );
+            let ctx = crate::subsystems::ResourceContext {
+                cash: game.player.cash,
+                conservation_points: game.player.conservation_points,
+                inventory: game.player.inventory.items.clone(),
+            };
 
             if let Some(Some(subsystem)) = game.player.slots.get_mut(i) {
-                subsystem.draw_overlay();
+                root_ui().window(
+                    hash!("subsystem_overlay"),
+                    vec2(sw * 0.1, sh * 0.1),
+                    vec2(sw * 0.8, sh * 0.8),
+                    |ui| {
+                        if ui.button(None, "Close") {
+                            close = true;
+                        }
+                        subsystem.draw_overlay(ui, &ctx);
+                    }
+                );
             }
 
             if close {
@@ -147,7 +152,7 @@ impl Screen for Home {
                 self.picking_for_slot = None;
             }
         }
-        
+
         ScreenTransition::Stay
     }
 }
