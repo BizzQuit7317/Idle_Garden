@@ -35,11 +35,15 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
         };
 
         let plant_label = spot.plant.as_deref().unwrap_or("none");
-        let label = format!("Spot {}: {} | Stage: {} | Watered: {}", i + 1, plant_label, stage_label, spot.watered);
-        if ui.button(None, label.as_str()) {
-            if let Some(ref item) = bed.selected_item.clone() {
-                spot.plant = Some(item.clone());
-                bed.selected_item = None; // deselect after planting
+        let spot_label = format!("Spot {}: {} | Stage: {} | Watered: {}", i + 1, plant_label, stage_label, spot.watered);
+
+        // Clicking a spot plants the selected item into it
+        if ui.button(None, spot_label.as_str()) {
+            if spot.stage == PlantStage::Empty {
+                if let Some(ref item) = bed.selected_item.clone() {
+                    bed.pending_plant = Some((i, item.clone()));
+                    bed.selected_item = None;
+                }
             }
         }
 
@@ -48,15 +52,13 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
             spot.watered = true;
         }
 
-        if matches!(spot.stage, PlantStage::Harvest) {
-            let harvest_label = format!("Harvest##{}", i);
-            if ui.button(None, harvest_label.as_str()) {
-                spot.plant = None;
-                spot.stage = PlantStage::Empty;
-                spot.ticks_passed = 0.0;
-                spot.watered = false;
-            }
+        // Harvest button only shown when ready
+    if matches!(spot.stage, PlantStage::Harvest) {
+        let harvest_label = format!("Harvest##{}", i);
+        if ui.button(None, harvest_label.as_str()) {
+            bed.pending_harvest = Some(i);
         }
+    }
 
         ui.separator();
     }

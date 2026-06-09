@@ -12,6 +12,8 @@ pub struct BedSystem {
     pub soil_quality: u8,
     pub growing_spots: Vec<system::GrowingSpot>,
     pub selected_item: Option<String>, // tracks what the player clicked in inventory
+    pub pending_plant: Option<(usize, String)>, // (spot index, item id)
+    pub pending_harvest: Option<usize>,
 }
 
 impl BedSystem {
@@ -20,6 +22,8 @@ impl BedSystem {
             soil_quality: 0,
             growing_spots: vec![system::GrowingSpot::new(); 9],
             selected_item: None,
+            pending_plant: None,
+            pending_harvest: None,
         }
     }
 }
