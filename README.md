@@ -5,6 +5,19 @@
 ║   the conservation idle game             ║
 ╚══════════════════════════════════════════╝
 generations. ecosystems. compost.
+
+## 🧭 Navigation
+- [What is this?](#-what-is-this)
+- [The Three Resources](#-the-three-resources)
+- [The Garden](#-the-garden)
+- [The Subsystems](#-the-subsystems-each-is-its-own-game)
+- [Generations & Property](#-generations--property--two-decoupled-axes)
+- [Game Loop](#-game-loop)
+- [Design Principles](#-design-principles)
+- [Concept Roadmap](#-concept-roadmap-high-level-not-committed)
+- [QoL Backlog](#-qol-backlog)
+- [Inspired By](#-inspired-by)
+
 ```
 
 > **Status:** concept phase
@@ -238,7 +251,7 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 - [x] Project skeleton, workspace layout, minimal dependency choices
 - [x] Decide directory structure (subsystems live in their own dirs from day one)
 - [x] Core `GameState` struct sketched out with stub fields for known systems
-- [x] Other scafholding structs that need to be initially present
+- [x] Other scaffolding structs that need to be initially present
 ### Phase 1 — Save/load
 - [x] Port save/load from `idle_fish`
 - [x] Fix the missing-file panic (graceful new-game fallback)
@@ -246,19 +259,19 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 ### Phase 2 — Page architecture & navigation
 - [x] Page trait / interface (whatever shape ends up right)
 - [x] Page registry & swapping mechanism
-- [ ] Garden view as the "home" page with clickable hotspots
-- [ ] Stub pages for at least two subsystems to prove swap works
-- [ ] Back-to-garden navigation pattern
+- [x] Garden view as the "home" page with clickable hotspots
+- [x] Stub pages for at least two subsystems to prove swap works
+- [x] Back-to-garden navigation pattern
 ### Phase 3 — Running game loop
-- [ ] Main loop scaffolding
+- [x] Main loop scaffolding
 - [ ] Tick rate decision (real-time vs accumulator-based)
-- [ ] Pause / resume hooks
-- [ ] Offline catch-up handler (with the offline-cap limit from idle_fish backlog)
+- [x] Pause / resume hooks
+- [x] Offline catch-up handler (with the offline-cap limit from idle_fish backlog)
 ### Phase 4 — Tick loop & subsystem contract
-- [ ] Subsystem plug-in interface (the integration contract — trait shape decided here)
-- [ ] Tick dispatch: GameState tells each registered subsystem to advance
-- [ ] Resource flow declaration (`produces` / `consumes`)
-- [ ] Confirm: registering a stub subsystem requires zero edits to shared enums
+- [x] Subsystem plug-in interface (the integration contract — trait shape decided here)
+- [x] Tick dispatch: GameState tells each registered subsystem to advance
+- [x] Resource flow declaration (`produces` / `consumes`)
+- [x] Confirm: registering a stub subsystem requires zero edits to shared enums
 ### Phase 5 — Game design pass
 - [ ] Subsystem-by-subsystem design docs (verb, inputs, outputs, win/fail conditions)
 - [ ] Resource flow graph for Council Flat tier
@@ -280,8 +293,8 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 - [ ] Legacy bonus system
 - [ ] Inheritance carry-over rules
 ### Phase 9 — Property progression
-- [ ] Property purchase mechanic (money gate)
-- [ ] Council flat → suburban semi transition
+- [x] Property purchase mechanic (money gate)
+- [x] Council flat → suburban semi transition
 - [ ] More slots, new subsystem types unlocked at semi tier
 ### Phase 10 — Council Flat MVP polish
 - [ ] Remaining subsystems for flat tier
@@ -293,6 +306,14 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 - [ ] Family line reset (the meta-prestige)
 - [ ] Pixel art polish
 - [ ] Whatever the simulation gremlin in the dev's brain wants to build that week
+
+---
+
+## 🛠 QoL Backlog
+
+### 🌻 Bed Subsystem
+- [ ] **Harvest all button** — single click to harvest all spots that are ready rather than clicking each one individually
+- [ ] **Sticky selection** — selected item stays selected until either a different item is chosen or the player runs out of that item, so planting a full bed of grass seeds doesn't require re-clicking after every spot
 
 ---
 
