@@ -40,7 +40,7 @@ impl Store {
     }
 
     pub fn build_stock(&mut self) {
-        self.stock = self.catalogue.clone();
+        self.stock = self.catalogue.iter().filter(|item| item.price > 0.0).cloned().collect();
         self.stock.truncate(self.stock_limit as usize);
     }
 

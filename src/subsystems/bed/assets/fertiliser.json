@@ -1,0 +1,10 @@
+[
+    {
+        "fertiliser_id": "mulch",
+        "stage_modifiers": [0.5, 1.0, 1.0]
+    },
+    {
+        "fertiliser_id": "growth_powder",
+        "stage_modifiers": [0.5, 0.5, 0.5]
+    }
+]

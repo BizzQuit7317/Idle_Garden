@@ -26,18 +26,17 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
     ui.label(None, "-- Growing Spots --");
     for (i, spot) in bed.growing_spots.iter_mut().enumerate() {
         let stage_label = match spot.stage {
-            PlantStage::Empty    => "Empty",
-            PlantStage::Seed     => "Seed",
-            PlantStage::Sprout   => "Sprout",
-            PlantStage::Grown    => "Grown",
-            PlantStage::Harvest  => "Ready to Harvest!",
-            PlantStage::Dead     => "Dead",
+            PlantStage::Empty   => "Empty",
+            PlantStage::Seed    => "Seed",
+            PlantStage::Sprout  => "Sprout",
+            PlantStage::Grown   => "Grown",
+            PlantStage::Harvest => "Ready to Harvest!",
+            PlantStage::Dead    => "Dead",
         };
 
         let plant_label = spot.plant.as_deref().unwrap_or("none");
-        let spot_label = format!("Spot {}: {} | Stage: {} | Watered: {}", i + 1, plant_label, stage_label, spot.watered);
+        let spot_label = format!("Spot {}: {} | Stage: {} | Watered: {} | Fertilised: {}", i, plant_label, stage_label, spot.watered, spot.fertilised);
 
-        // Clicking a spot plants the selected item into it
         if ui.button(None, spot_label.as_str()) {
             if spot.stage == PlantStage::Empty {
                 if let Some(ref item) = bed.selected_item.clone() {
@@ -47,18 +46,36 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
             }
         }
 
-        let label = format!("Water##{}", i);
-        if ui.button(None, label.as_str()) {
+        let water_label = format!("Water##{}", i);
+        if ui.button(None, water_label.as_str()) {
             spot.watered = true;
         }
 
-        // Harvest button only shown when ready
-    if matches!(spot.stage, PlantStage::Harvest) {
-        let harvest_label = format!("Harvest##{}", i);
-        if ui.button(None, harvest_label.as_str()) {
-            bed.pending_harvest = Some(i);
+        let fertilise_label = format!("Fertilise##{}", i);
+        if ui.button(None, fertilise_label.as_str()) {
+            if let Some(ref item) = bed.selected_item.clone() {
+                // only apply if the selected item is a fertiliser
+                if bed.fertiliser_definitions.iter().any(|f| f.fertiliser_id == *item) {
+                    bed.pending_fertilise = Some((i, item.clone()));
+                    bed.selected_item = None;
+                    spot.fertilised = true;
+                }
+            }
         }
-    }
+
+        if matches!(spot.stage, PlantStage::Harvest) {
+            let harvest_label = format!("Harvest##{}", i);
+            if ui.button(None, harvest_label.as_str()) {
+                bed.pending_harvest = Some(i);
+            }
+        }
+
+        if matches!(spot.stage, PlantStage::Dead) {
+            let dead_label = format!("Dead##{}", i);
+            if ui.button(None, dead_label.as_str()) {
+                bed.pending_waste = Some(i);
+            }
+        }
 
         ui.separator();
     }

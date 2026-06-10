@@ -14,7 +14,10 @@ pub struct BedSystem {
     pub selected_item: Option<String>, // tracks what the player clicked in inventory
     pub pending_plant: Option<(usize, String)>, // (spot index, item id)
     pub pending_harvest: Option<usize>,
+    pub pending_waste: Option<usize>,
+    pub pending_fertilise: Option<(usize, String)>,
     pub plant_definitions: Vec<system::PlantDefinition>,
+    pub fertiliser_definitions: Vec<system::FertiliserDefinition>
 }
 
 impl BedSystem {
@@ -25,7 +28,10 @@ impl BedSystem {
             selected_item: None,
             pending_plant: None,
             pending_harvest: None,
+            pending_waste: None,
+            pending_fertilise: None,
             plant_definitions: system::load_plant_definitions(),
+            fertiliser_definitions: system::load_fertiliser_definitions(),
         }
     }
 }
@@ -60,7 +66,9 @@ macro_rules! register_item {
     }
 }
 
-register_item!("blue_flower_seed", "Blue Flower Seed", "A small seed for a blue flower.", 1.0, 20.0);
-register_item!("flower_flower", "Blue Flower", "A blue flower.", 2.0, 3.0);
-register_item!("grass_seeds", "Grass Seeds", "Grass seeds, what else?.", 1.0, 2.0);
-register_item!("grass", "Grass", "Regular degular grass buddy.", 5.0, 6.0);
+register_item!("blue_flower_seed", "Blue Flower Seed", "A small seed for a blue flower.", 10.0, 1.0);
+register_item!("blue_flower", "Blue Flower", "A blue flower.", 20.0, 1.0);
+register_item!("grass_seeds", "Grass Seeds", "Grass seeds, what else?.", 1.0, 1.0);
+register_item!("grass", "Grass", "Regular degular grass buddy.", 5.0, 1.0);
+register_item!("mulch", "Mulch", "Plant waste.", 0.0, 2.0);
+register_item!("growth_powder", "Growth Powder", "Makes plants grow quicker at all stages", 100.0, 200.0);
