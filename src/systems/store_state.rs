@@ -40,7 +40,7 @@ impl Store {
     }
 
     pub fn build_stock(&mut self) {
-        self.stock = self.catalogue.iter().filter(|item| item.price > 0.0).cloned().collect();
+        self.stock = self.catalogue.iter().filter(|item| item.price > 0.0 && (item.item_id.contains("_seed") || item.item_id.contains("_feed"))).cloned().collect(); //TESTING ONLY SHOWINGS SEEDS FOR NOW
         self.stock.truncate(self.stock_limit as usize);
     }
 
