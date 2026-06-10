@@ -316,6 +316,9 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 - [ ] **Harvest all button** — single click to harvest all spots that are ready rather than clicking each one individually
 - [ ] **Sticky selection** — selected item stays selected until either a different item is chosen or the player runs out of that item, so planting a full bed of grass seeds doesn't require re-clicking after every spot
 
+## General
+- [ ] **Confirm New Game** - Add a confirmation on the new game screen so if your testing a longer run a miss click wont ruin you, also add a catch for the panick if the version has changed 
+
 ---
 
 ## 🙏 Inspired By
