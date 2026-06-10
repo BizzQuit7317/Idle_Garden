@@ -1,9 +1,11 @@
+```
 ╔══════════════════════════════════════════╗
 ║   🌱  i d l e _ g a r d e n  🌱         ║
 ║   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~       ║
 ║   the conservation idle game             ║
 ╚══════════════════════════════════════════╝
 generations. ecosystems. compost.
+```
 
 ## 🧭 Navigation
 - [What is this?](#-what-is-this)
