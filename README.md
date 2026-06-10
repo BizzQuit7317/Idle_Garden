@@ -1,4 +1,3 @@
-```
 ╔══════════════════════════════════════════╗
 ║   🌱  i d l e _ g a r d e n  🌱         ║
 ║   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~       ║
@@ -18,7 +17,7 @@ generations. ecosystems. compost.
 - [QoL Backlog](#-qol-backlog)
 - [Inspired By](#-inspired-by)
 
-```
+---
 
 > **Status:** concept phase
 > **Genre:** idle / incremental / simulation
