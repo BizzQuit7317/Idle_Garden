@@ -55,39 +55,40 @@ inventory::submit!(SubsystemRegistration {
 });
 
 macro_rules! register_item {
-    ($id:expr, $display:expr, $desc:expr, $cash:expr, $conservation:expr) => {
+    ($id:expr, $display:expr, $desc:expr, $cash:expr, $conservation:expr, $store:expr) => {
         inventory::submit!(ItemDefinition {
             id: $id,
             display_name: $display,
             description: $desc,
             cash_value: $cash,
             conservation_value: $conservation,
+            in_store: $store,
         });
     }
 }
 
 // Tier 1 - Grass
-register_item!("grass_seeds", "Grass Seeds", "Grass seeds, what else?", 1.0, 1.0);
-register_item!("grass", "Grass", "Regular degular grass buddy.", 3.0, 1.0);
+register_item!("grass_seeds", "Grass Seeds", "Grass seeds, what else?", 1.0, 1.0, true);
+register_item!("grass", "Grass", "Regular degular grass buddy.", 3.0, 1.0, false);
 
 // Tier 2 - Blue Flower
-register_item!("blue_flower_seed", "Blue Flower Seed", "A small seed for a blue flower.", 5.0, 2.0);
-register_item!("blue_flower", "Blue Flower", "A pretty blue flower.", 12.0, 2.0);
+register_item!("blue_flower_seed", "Blue Flower Seed", "A small seed for a blue flower.", 5.0, 2.0, true);
+register_item!("blue_flower", "Blue Flower", "A pretty blue flower.", 12.0, 2.0, false);
 
 // Tier 3 - Sunflower
-register_item!("sunflower_seed", "Sunflower Seed", "A big cheerful seed.", 15.0, 3.0);
-register_item!("sunflower", "Sunflower", "Tall and bright.", 35.0, 3.0);
+register_item!("sunflower_seed", "Sunflower Seed", "A big cheerful seed.", 15.0, 3.0, true);
+register_item!("sunflower", "Sunflower", "Tall and bright.", 35.0, 3.0, false);
 
 // Tier 4 - Rose
-register_item!("rose_seed", "Rose Seed", "A delicate seed.", 45.0, 5.0);
-register_item!("rose", "Rose", "A beautiful rose.", 100.0, 5.0);
+register_item!("rose_seed", "Rose Seed", "A delicate seed.", 45.0, 5.0, true);
+register_item!("rose", "Rose", "A beautiful rose.", 100.0, 5.0, false);
 
 // Tier 5 - Orchid
-register_item!("orchid_seed", "Orchid Seed", "A rare and fussy seed.", 130.0, 8.0);
-register_item!("orchid", "Orchid", "An exotic orchid.", 300.0, 8.0);
+register_item!("orchid_seed", "Orchid Seed", "A rare and fussy seed.", 130.0, 8.0, true);
+register_item!("orchid", "Orchid", "An exotic orchid.", 300.0, 8.0, false);
 
 // Utility
-register_item!("mulch", "Mulch", "Plant waste.", 0.0, 2.0);
-register_item!("compost", "Compost", "Helps seeds sprout and establish faster.", 8.0, 3.0);
-register_item!("plant_feed", "Plant Feed", "A liquid feed that speeds up all growth stages.", 25.0, 5.0);
-register_item!("growth_powder", "Growth Powder", "Makes plants grow quicker at all stages.", 100.0, 200.0);
+register_item!("mulch", "Mulch", "Plant waste.", 0.0, 2.0, false);
+register_item!("compost", "Compost", "Helps seeds sprout and establish faster.", 8.0, 3.0, false);
+register_item!("plant_feed", "Plant Feed", "A liquid feed that speeds up all growth stages.", 25.0, 5.0, false);
+register_item!("growth_powder", "Growth Powder", "Makes plants grow quicker at all stages.", 100.0, 200.0, false);

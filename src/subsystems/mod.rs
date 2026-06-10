@@ -33,6 +33,7 @@ pub struct ItemDefinition {
     pub description: &'static str,
     pub cash_value: f64,
     pub conservation_value: f64,
+    pub in_store: bool,
 }
 
 inventory::collect!(ItemDefinition);

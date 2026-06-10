@@ -39,16 +39,17 @@ inventory::submit!(SubsystemRegistration {
 });
 
 macro_rules! register_item {
-    ($id:expr, $display:expr, $desc:expr, $cash:expr, $conservation:expr) => {
+    ($id:expr, $display:expr, $desc:expr, $cash:expr, $conservation:expr, $store:expr) => {
         inventory::submit!(ItemDefinition {
             id: $id,
             display_name: $display,
             description: $desc,
             cash_value: $cash,
             conservation_value: $conservation,
+            in_store: $store,
         });
     }
 }
 
-register_item!("bird_feed", "Bird Feed", "Seeds and scraps left by visiting birds.", 15.0, 1.0);
-register_item!("feather", "Feather", "A small feather left behind by a visiting bird.", 1.0, 1.0);
+register_item!("bird_feed", "Bird Feed", "Seeds and scraps left by visiting birds.", 15.0, 1.0, true);
+register_item!("feather", "Feather", "A small feather left behind by a visiting bird.", 1.0, 1.0, false);

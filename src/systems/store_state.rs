@@ -7,6 +7,7 @@ pub struct StoreItem {
     pub price: f64,
     pub quantity_available: u32,
     pub conservation_price: f64,
+    pub in_store: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -36,13 +37,14 @@ impl Store {
                 item_id: def.id.to_string(),
                 price: def.cash_value,        // placeholder — we'll add base prices to ItemDefinition later
                 quantity_available: 5,
-                conservation_price: def.conservation_value * 100.0 //makeing the conservation buy price 100 times higher than its sell price
+                conservation_price: def.conservation_value * 100.0, //makeing the conservation buy price 100 times higher than its sell price
+                in_store: def.in_store,
             })
             .collect();
     }
 
     pub fn build_stock(&mut self) {
-        self.stock = self.catalogue.iter().filter(|item| item.price > 0.0 && (item.item_id.contains("_seed") || item.item_id.contains("_feed"))).cloned().collect(); //TESTING ONLY SHOWINGS SEEDS FOR NOW
+        self.stock = self.catalogue.iter().filter(|item| item.price > 0.0 && item.in_store).cloned().collect(); //TESTING ONLY SHOWINGS SEEDS FOR NOW
         self.stock.truncate(self.stock_limit as usize);
     }
 
