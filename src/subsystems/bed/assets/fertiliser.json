@@ -1,7 +1,15 @@
 [
     {
         "fertiliser_id": "mulch",
-        "stage_modifiers": [0.5, 1.0, 1.0]
+        "stage_modifiers": [0.75, 1.0, 1.0]
+    },
+    {
+        "fertiliser_id": "compost",
+        "stage_modifiers": [0.75, 0.75, 1.0]
+    },
+    {
+        "fertiliser_id": "plant_feed",
+        "stage_modifiers": [0.75, 0.75, 0.75]
     },
     {
         "fertiliser_id": "growth_powder",

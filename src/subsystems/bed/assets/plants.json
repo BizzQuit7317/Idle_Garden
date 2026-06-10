@@ -16,21 +16,21 @@
     {
         "seed_id": "sunflower_seed",
         "produces_id": "sunflower",
-        "dead_id": "mulch",
+        "dead_id": "compost",
         "ticks_per_stage": [40.0, 60.0, 80.0],
         "water_till_death": 40.0
     },
     {
         "seed_id": "rose_seed",
         "produces_id": "rose",
-        "dead_id": "mulch",
+        "dead_id": "compost",
         "ticks_per_stage": [80.0, 120.0, 160.0],
         "water_till_death": 50.0
     },
     {
         "seed_id": "orchid_seed",
         "produces_id": "orchid",
-        "dead_id": "mulch",
+        "dead_id": "plant_feed",
         "ticks_per_stage": [160.0, 240.0, 320.0],
         "water_till_death": 60.0
     }

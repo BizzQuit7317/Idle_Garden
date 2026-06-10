@@ -88,4 +88,6 @@ register_item!("orchid", "Orchid", "An exotic orchid.", 300.0, 8.0);
 
 // Utility
 register_item!("mulch", "Mulch", "Plant waste.", 0.0, 2.0);
+register_item!("compost", "Compost", "Helps seeds sprout and establish faster.", 8.0, 3.0);
+register_item!("plant_feed", "Plant Feed", "A liquid feed that speeds up all growth stages.", 25.0, 5.0);
 register_item!("growth_powder", "Growth Powder", "Makes plants grow quicker at all stages.", 100.0, 200.0);
