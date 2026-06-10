@@ -318,7 +318,7 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 
 ## General
 - [ ] **Confirm New Game** - Add a confirmation on the new game screen so if your testing a longer run a miss click wont ruin you, also add a catch for the panick if the version has changed
-- [ ] **Store tag on items** - Add a tag on every item registered thats a bool for store so we can easily filter out items that are not suppose to be in the store
+- [x] **Store tag on items** - Add a tag on every item registered thats a bool for store so we can easily filter out items that are not suppose to be in the store
 
 ---
 
