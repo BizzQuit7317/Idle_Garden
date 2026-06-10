@@ -50,5 +50,5 @@ macro_rules! register_item {
     }
 }
 
-register_item!("bird_feed", "Bird Feed", "Seeds and scraps left by visiting birds.", 1.0, 1.0);
-register_item!("feather", "Feather", "A small feather left behind by a visiting bird.", 10.0, 1.0);
+register_item!("bird_feed", "Bird Feed", "Seeds and scraps left by visiting birds.", 15.0, 1.0);
+register_item!("feather", "Feather", "A small feather left behind by a visiting bird.", 1.0, 1.0);

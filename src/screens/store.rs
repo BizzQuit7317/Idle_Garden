@@ -137,7 +137,7 @@ impl Screen for Store {
             StoreTab::ConservationBuy => SlotContext {
                 // TODO: swap i.price for i.conservation_price once added to StoreItem
                 items: game.store.stock.iter()
-                    .map(|i| (i.item_id.clone(), i.price, i.quantity_available))
+                    .map(|i| (i.item_id.clone(), i.conservation_price, i.quantity_available))
                     .collect(),
                 currency_available: game.player.conservation_points,
             },
@@ -201,7 +201,7 @@ impl Screen for Store {
                     match self.active_tab {
                         StoreTab::CashBuy => {
                             if ctx.currency_available >= *price {
-                                let cost = game.store.try_buy(slot, game.player.cash);
+                                let cost = game.store.try_buy(slot, game.player.cash, false);
                                 if cost > 0.0 {
                                     game.player.cash -= cost;
                                     game.player.inventory.add(item_id, 1);
@@ -211,7 +211,7 @@ impl Screen for Store {
                         }
                         StoreTab::ConservationBuy => {
                             if ctx.currency_available >= *price {
-                                let cost = game.store.try_buy(slot, game.player.conservation_points);
+                                let cost = game.store.try_buy(slot, game.player.conservation_points, true);
                                 if cost > 0.0 {
                                     game.player.conservation_points -= cost;
                                     game.player.inventory.add(item_id, 1);

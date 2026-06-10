@@ -3,14 +3,35 @@
         "seed_id": "grass_seeds",
         "produces_id": "grass",
         "dead_id": "mulch",
-        "ticks_per_stage": [10.0, 20.0, 30.0],
-        "water_till_death": 20.0
+        "ticks_per_stage": [10.0, 15.0, 20.0],
+        "water_till_death": 25.0
     },
     {
         "seed_id": "blue_flower_seed",
         "produces_id": "blue_flower",
         "dead_id": "mulch",
-        "ticks_per_stage": [10.0, 20.0, 30.0],
-        "water_till_death": 25.0
+        "ticks_per_stage": [20.0, 30.0, 40.0],
+        "water_till_death": 30.0
+    },
+    {
+        "seed_id": "sunflower_seed",
+        "produces_id": "sunflower",
+        "dead_id": "mulch",
+        "ticks_per_stage": [40.0, 60.0, 80.0],
+        "water_till_death": 40.0
+    },
+    {
+        "seed_id": "rose_seed",
+        "produces_id": "rose",
+        "dead_id": "mulch",
+        "ticks_per_stage": [80.0, 120.0, 160.0],
+        "water_till_death": 50.0
+    },
+    {
+        "seed_id": "orchid_seed",
+        "produces_id": "orchid",
+        "dead_id": "mulch",
+        "ticks_per_stage": [160.0, 240.0, 320.0],
+        "water_till_death": 60.0
     }
 ]

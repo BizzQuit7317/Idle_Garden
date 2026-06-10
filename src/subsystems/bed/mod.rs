@@ -66,9 +66,26 @@ macro_rules! register_item {
     }
 }
 
-register_item!("blue_flower_seed", "Blue Flower Seed", "A small seed for a blue flower.", 10.0, 1.0);
-register_item!("blue_flower", "Blue Flower", "A blue flower.", 20.0, 1.0);
-register_item!("grass_seeds", "Grass Seeds", "Grass seeds, what else?.", 1.0, 1.0);
-register_item!("grass", "Grass", "Regular degular grass buddy.", 5.0, 1.0);
+// Tier 1 - Grass
+register_item!("grass_seeds", "Grass Seeds", "Grass seeds, what else?", 1.0, 1.0);
+register_item!("grass", "Grass", "Regular degular grass buddy.", 3.0, 1.0);
+
+// Tier 2 - Blue Flower
+register_item!("blue_flower_seed", "Blue Flower Seed", "A small seed for a blue flower.", 5.0, 2.0);
+register_item!("blue_flower", "Blue Flower", "A pretty blue flower.", 12.0, 2.0);
+
+// Tier 3 - Sunflower
+register_item!("sunflower_seed", "Sunflower Seed", "A big cheerful seed.", 15.0, 3.0);
+register_item!("sunflower", "Sunflower", "Tall and bright.", 35.0, 3.0);
+
+// Tier 4 - Rose
+register_item!("rose_seed", "Rose Seed", "A delicate seed.", 45.0, 5.0);
+register_item!("rose", "Rose", "A beautiful rose.", 100.0, 5.0);
+
+// Tier 5 - Orchid
+register_item!("orchid_seed", "Orchid Seed", "A rare and fussy seed.", 130.0, 8.0);
+register_item!("orchid", "Orchid", "An exotic orchid.", 300.0, 8.0);
+
+// Utility
 register_item!("mulch", "Mulch", "Plant waste.", 0.0, 2.0);
-register_item!("growth_powder", "Growth Powder", "Makes plants grow quicker at all stages", 100.0, 200.0);
+register_item!("growth_powder", "Growth Powder", "Makes plants grow quicker at all stages.", 100.0, 200.0);

@@ -6,6 +6,7 @@ pub struct StoreItem {
     pub item_id: String,
     pub price: f64,
     pub quantity_available: u32,
+    pub conservation_price: f64,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -35,6 +36,7 @@ impl Store {
                 item_id: def.id.to_string(),
                 price: def.cash_value,        // placeholder — we'll add base prices to ItemDefinition later
                 quantity_available: 5,
+                conservation_price: def.conservation_value * 100.0 //makeing the conservation buy price 100 times higher than its sell price
             })
             .collect();
     }
@@ -44,11 +46,12 @@ impl Store {
         self.stock.truncate(self.stock_limit as usize);
     }
 
-    pub fn try_buy(&mut self, item_index: usize, player_cash: f64) -> f64 {
+    pub fn try_buy(&mut self, item_index: usize, player_funds: f64, use_conservation: bool) -> f64 {
         let price = if let Some(item) = self.stock.get_mut(item_index) {
-            if player_cash >= item.price {
+            let cost = if use_conservation { item.conservation_price } else { item.price };
+            if player_funds >= cost {
                 item.quantity_available -= 1;
-                item.price
+                cost
             } else {
                 println!("[DBG]Could not afford");
                 return 0.0;
