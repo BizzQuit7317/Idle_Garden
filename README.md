@@ -313,6 +313,7 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 ## 🛠 QoL Backlog
 
 ### 🌻 Bed Subsystem
+- [ ] **Beds display names** - Need to add display names to the flowers instead of id
 - [ ] **Harvest all button** — single click to harvest all spots that are ready rather than clicking each one individually
 - [ ] **Sticky selection** — selected item stays selected until either a different item is chosen or the player runs out of that item, so planting a full bed of grass seeds doesn't require re-clicking after every spot
 
