@@ -1,0 +1,128 @@
+[
+    {
+        "bird_id": "house_sparrow",
+        "display_name": "House Sparrow",
+        "family": "SmallPearching",
+        "dominance": 2.0,
+        "base_spawn_weight": 0.8,
+        "max_time": 80.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "blue_tit",
+        "display_name": "Blue Tit",
+        "family": "SmallPearching",
+        "dominance": 3.0,
+        "base_spawn_weight": 0.7,
+        "max_time": 70.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "great_tit",
+        "display_name": "Great Tit",
+        "family": "SmallPearching",
+        "dominance": 5.0,
+        "base_spawn_weight": 0.6,
+        "max_time": 70.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "chaffinch",
+        "display_name": "Chaffinch",
+        "family": "SmallPearching",
+        "dominance": 3.0,
+        "base_spawn_weight": 0.65,
+        "max_time": 75.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "robin",
+        "display_name": "Robin",
+        "family": "SmallPearching",
+        "dominance": 6.0,
+        "base_spawn_weight": 0.5,
+        "max_time": 90.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "common_starling",
+        "display_name": "Common Starling",
+        "family": "Starlings",
+        "dominance": 8.0,
+        "base_spawn_weight": 0.6,
+        "max_time": 60.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "rose_starling",
+        "display_name": "Rose Starling",
+        "family": "Starlings",
+        "dominance": 9.0,
+        "base_spawn_weight": 0.3,
+        "max_time": 60.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "spotless_starling",
+        "display_name": "Spotless Starling",
+        "family": "Starlings",
+        "dominance": 10.0,
+        "base_spawn_weight": 0.2,
+        "max_time": 55.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "pidgeon",
+        "display_name": "Pigeon",
+        "family": "Doves",
+        "dominance": 15.0,
+        "base_spawn_weight": 0.5,
+        "max_time": 100.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "collared_dove",
+        "display_name": "Collared Dove",
+        "family": "Doves",
+        "dominance": 12.0,
+        "base_spawn_weight": 0.45,
+        "max_time": 90.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "stock_dove",
+        "display_name": "Stock Dove",
+        "family": "Doves",
+        "dominance": 13.0,
+        "base_spawn_weight": 0.3,
+        "max_time": 85.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "crow",
+        "display_name": "Crow",
+        "family": "Corvids",
+        "dominance": 50.0,
+        "base_spawn_weight": 0.2,
+        "max_time": 120.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "magpie",
+        "display_name": "Magpie",
+        "family": "Corvids",
+        "dominance": 35.0,
+        "base_spawn_weight": 0.25,
+        "max_time": 110.0,
+        "drop_table": []
+    },
+    {
+        "bird_id": "sparrowhawk",
+        "display_name": "Sparrowhawk",
+        "family": "Raptors",
+        "dominance": 200.0,
+        "base_spawn_weight": 0.05,
+        "max_time": 150.0,
+        "drop_table": []
+    }
+]

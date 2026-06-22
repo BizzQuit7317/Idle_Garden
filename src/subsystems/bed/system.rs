@@ -16,6 +16,7 @@ pub enum PlantStage {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct PlantDefinition {
     pub seed_id: String,
+    pub display_name: String,
     pub produces_id: String,
     pub dead_id: String,
     pub ticks_per_stage: Vec<f64>,
@@ -25,6 +26,7 @@ pub struct PlantDefinition {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct FertiliserDefinition {
     pub fertiliser_id: String,
+    pub display_name: String,
     pub stage_modifiers: Vec<f64>,
 }
 

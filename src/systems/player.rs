@@ -113,6 +113,10 @@ impl Player {
         let mut inventory = Inventory::new();
         inventory.add("grass_seeds", 5); //Starting the player with 5 grass seeds
         inventory.add("growth_powder", 1); //testing fertilisers
+        inventory.add("small_cage", 1); //testing the feeder
+        inventory.add("bird_feed", 3); //testing the feeder
+        inventory.add("medium_cage", 1);
+        inventory.add("platform", 1);
 
         let property = Property::Balcony;
         let max_slots = property.max_slots();

@@ -1,0 +1,23 @@
+[
+    {
+        "feeder_id": "small_cage",
+        "display_name": "Small Cage Feeder",
+        "food_capacity": 50,
+        "bird_capacity": 8,
+        "largest_family": "SmallPearching"
+    },
+    {
+        "feeder_id": "medium_cage",
+        "display_name": "Medium Cage Feeder",
+        "food_capacity": 100,
+        "bird_capacity": 15,
+        "largest_family": "Starlings"
+    },
+    {
+        "feeder_id": "platform",
+        "display_name": "Platform Feeder",
+        "food_capacity": 150,
+        "bird_capacity": 25,
+        "largest_family": "Corvids"
+    }
+]

@@ -1,6 +1,7 @@
 [
     {
         "seed_id": "grass_seeds",
+        "display_name": "Grass Seeds",
         "produces_id": "grass",
         "dead_id": "mulch",
         "ticks_per_stage": [10.0, 15.0, 20.0],
@@ -8,6 +9,7 @@
     },
     {
         "seed_id": "blue_flower_seed",
+        "display_name": "Blue Flower Seed",
         "produces_id": "blue_flower",
         "dead_id": "mulch",
         "ticks_per_stage": [20.0, 30.0, 40.0],
@@ -15,6 +17,7 @@
     },
     {
         "seed_id": "sunflower_seed",
+        "display_name": "Sun Flower Seed",
         "produces_id": "sunflower",
         "dead_id": "compost",
         "ticks_per_stage": [40.0, 60.0, 80.0],
@@ -22,6 +25,7 @@
     },
     {
         "seed_id": "rose_seed",
+        "display_name": "Rose Seed",
         "produces_id": "rose",
         "dead_id": "compost",
         "ticks_per_stage": [80.0, 120.0, 160.0],
@@ -29,6 +33,7 @@
     },
     {
         "seed_id": "orchid_seed",
+        "display_name": "Orchid Seed",
         "produces_id": "orchid",
         "dead_id": "plant_feed",
         "ticks_per_stage": [160.0, 240.0, 320.0],

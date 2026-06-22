@@ -1,4 +1,4 @@
-mod system;
+pub mod system;
 mod overlay;
 
 use macroquad::prelude::*;
@@ -9,13 +9,37 @@ use crate::systems::player::Property;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FeederSystem {
-    pub feed: u8,
+    pub current_feeder: Option<system::FeederDefinition>,
+    pub current_food: Option<system::FoodDefinition>,
+    pub current_food_amount: u32,
+    pub current_birds: Vec<(system::BirdDefinition, f64)>, //(bird, ticker)
+    pub bird_pool: Vec<(system::BirdDefinition, f64)>, //(bird, spawn weight)
+    pub pending_feeder: Option<system::FeederDefinition>,
+    pub pending_food: Option<system::FoodDefinition>,
+    pub selected_item: Option<String>, // tracks what the player clicked in inventory
+    pub feeder_definitions: Vec<system::FeederDefinition>,
+    pub food_definitions: Vec<system::FoodDefinition>,
+    pub bird_definitions: Vec<system::BirdDefinition>,
+    pub decay_rate_ticker: f64,
+    pub spawn_ticker: f64,
 }
 
 impl FeederSystem {
     pub fn new() -> FeederSystem {
         FeederSystem {
-            feed: 0,
+            current_feeder: None,
+            current_food: None,
+            current_food_amount: 0,
+            current_birds: vec![],
+            bird_pool: vec![],
+            pending_feeder: None,
+            pending_food: None,
+            selected_item: None,
+            feeder_definitions: system::load_feeder_definitions(),
+            food_definitions: system::load_food_definitions(),
+            bird_definitions: system::load_bird_definitions(),
+            decay_rate_ticker: 0.0,
+            spawn_ticker: 10.0, //base cooldown
         }
     }
 }
@@ -53,3 +77,6 @@ macro_rules! register_item {
 
 register_item!("bird_feed", "Bird Feed", "Seeds and scraps left by visiting birds.", 15.0, 1.0, true);
 register_item!("feather", "Feather", "A small feather left behind by a visiting bird.", 1.0, 1.0, false);
+register_item!("small_cage", "Small Cage Feeder", "A small cage feeder", 1.0, 1.0, false);
+register_item!("medium_cage", "Medium Cage Feeder", "A medium cage feeder", 1.0, 1.0, false);
+register_item!("platform", "Platform Feeder", "A flat platform feeder open to all birds", 1.0, 1.0, false);

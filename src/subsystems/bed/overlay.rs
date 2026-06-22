@@ -10,14 +10,19 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
     // Inventory panel
     ui.label(None, "-- Inventory --");
     for (item_id, amount) in &ctx.inventory {
-        let label = format!("{}: {}", item_id, amount);
+        let def = crate::subsystems::get_item_definition(item_id);
+        let display_name = def.map(|d| d.display_name).unwrap_or(item_id.as_str());
+        let label = format!("{}: {}", display_name, amount);
         if ui.button(None, label.as_str()) {
             bed.selected_item = Some(item_id.clone());
         }
     }
 
     if let Some(ref selected) = bed.selected_item.clone() {
-        ui.label(None, &format!("Selected: {}", selected));
+        let selected_display = crate::subsystems::get_item_definition(selected)
+            .map(|d| d.display_name)
+            .unwrap_or(selected.as_str());
+        ui.label(None, &format!("Selected: {}", selected_display));
     }
 
     ui.separator();
@@ -34,8 +39,12 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
             PlantStage::Dead    => "Dead",
         };
 
-        let plant_label = spot.plant.as_deref().unwrap_or("none");
-        let spot_label = format!("Spot {}: {} | Stage: {} | Watered: {} | Fertilised: {}", i, plant_label, stage_label, spot.watered, spot.fertilised);
+        let plant_display = spot.plant.as_deref()
+            .and_then(|id| bed.plant_definitions.iter().find(|p| p.seed_id == id))
+            .map(|p| p.display_name.as_str())
+            .unwrap_or("Empty");
+
+        let spot_label = format!("Spot {}: {} | Stage: {} | Watered: {} | Fertilised: {}", i, plant_display, stage_label, spot.watered, spot.fertilised);
 
         if ui.button(None, spot_label.as_str()) {
             if spot.stage == PlantStage::Empty {
@@ -54,7 +63,6 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
         let fertilise_label = format!("Fertilise##{}", i);
         if ui.button(None, fertilise_label.as_str()) {
             if let Some(ref item) = bed.selected_item.clone() {
-                // only apply if the selected item is a fertiliser
                 if bed.fertiliser_definitions.iter().any(|f| f.fertiliser_id == *item) {
                     bed.pending_fertilise = Some((i, item.clone()));
                     bed.selected_item = None;
