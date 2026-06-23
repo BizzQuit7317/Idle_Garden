@@ -40,6 +40,7 @@ pub struct BirdDefinition {
     pub base_spawn_weight: f64,
     pub max_time: f64,
     pub drop_table: Vec<(String, f64)>,
+    pub base_conservation: f64,
 }
 
 pub fn load_feeder_definitions() -> Vec<FeederDefinition> {
@@ -176,6 +177,14 @@ pub fn tick(feeder: &mut FeederSystem, ctx: &ResourceContext) -> SubsystemOutput
 
     try_spawn_birds(feeder);
     tick_birds(feeder);
+
+    //Get current birds conservation
+    let total_conservation: f64 = feeder.current_birds
+        .iter()
+        .map(|(bird, _)| bird.base_conservation)
+        .sum();
+
+    output.conservation_delta = total_conservation;
 
     // Handle pending feeder
     if let Some(def) = feeder.pending_feeder.take() {
