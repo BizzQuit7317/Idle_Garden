@@ -20,6 +20,7 @@ pub struct Modal {
     pub npc_name: Option<String>, //if npc need to take string otherwise useless
     pub npc_state: Option<NPCViewState>, //true if npc dialogue, false if npc store
     pub npc_stock: Option<Vec<StoreItem>>, //a refernce to the npc stock to display
+    pub current_line: usize,
 }
 
 #[derive(Debug, Serialize, Deserialize, Default)]
@@ -48,6 +49,7 @@ impl PopupQueue {
             npc_name: npc_name.clone(),
             npc_state: npc_name.as_ref().map(|_| NPCViewState::Dialogue), // start in Dialogue if NPC
             npc_stock,
+            current_line: 0,
         });
     }
 
@@ -72,7 +74,7 @@ impl PopupQueue {
             if self.modals[i].npc_flag {
                 match self.modals[i].npc_state {
                     Some(NPCViewState::Dialogue) => {
-                        let message = self.modals[i].message.clone();
+                        let current_line = self.modals[i].message[self.modals[i].current_line].clone();
                         let npc_name = self.modals[i].npc_name.clone().unwrap_or("Unknown".to_string());
                         let mut close = false;
                         let mut switch_to_store = false;
@@ -95,15 +97,18 @@ impl PopupQueue {
                             vec2(0.0, sh * 0.75),
                             vec2(sw, sh * 0.25),
                             |ui| {
+                                if ui.button(None, "Next") {
+                                    if self.modals[i].current_line < self.modals[i].message.len() - 1 {
+                                        self.modals[i].current_line += 1;
+                                    }
+                                }
                                 if ui.button(None, "View Upgrades") {
                                     switch_to_store = true;
                                 }
                                 if ui.button(None, "Close") {
                                     close = true;
                                 }
-                                for line in &message {
-                                    ui.label(None, line);
-                                }
+                                ui.label(None, &current_line);  // Display ONLY current line, not all
                             }
                         );
 

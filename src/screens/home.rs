@@ -36,7 +36,8 @@ impl Screen for Home {
             .size(vec2(200.0, 80.0))
             .ui(&mut root_ui())
         {
-            game.popups.push_modal(vec![game.npcs[0].key_dialogue[0].clone()], Some(game.npcs[0].first_name.clone()), Some(game.npcs[0].stock.clone()));
+            let remaining_dialogue = game.npcs[0].key_dialogue[game.npcs[0].key_dialogue_index..].to_vec();
+            game.popups.push_modal(remaining_dialogue, Some(game.npcs[0].first_name.clone()), Some(game.npcs[0].stock.clone()));
         }
 
         //Draw text elements, they will still fall behind root_ui elements

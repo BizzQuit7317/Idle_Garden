@@ -4,8 +4,10 @@
         "family_name": "Gray",
         "first_name": "Chancla",
         "key_dialogue": [
-            "Welcome to the garden."
+            "Welcome to the garden.",
+            "Here we are try to bring some nature to us."
         ],
+        "key_dialogue_index": 0,
         "ambient_dialogue": [
             "How's the garden treating you?"
         ],
@@ -19,6 +21,7 @@
         "key_dialogue": [
             "I specialize in beds. Need more space for your plants?"
         ],
+        "key_dialogue_index": 0,
         "ambient_dialogue": [
             "Your beds are looking healthy."
         ],
@@ -32,6 +35,7 @@
         "key_dialogue": [
             "I know birds. Want to attract more?"
         ],
+        "key_dialogue_index": 0,
         "ambient_dialogue": [
             "The birds are quite active today."
         ],
