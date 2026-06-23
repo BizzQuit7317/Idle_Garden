@@ -30,6 +30,15 @@ impl Screen for Home {
 
         clear_background(data::constants::DEFAULT_BACKGROUND_COLOR);
 
+        //Interact with the tutorial_npc
+        if widgets::Button::new("Tutorial NPC")
+            .position(vec2(sw * 0.8, sh * 0.4))
+            .size(vec2(200.0, 80.0))
+            .ui(&mut root_ui())
+        {
+            game.popups.push_modal(vec![game.npcs[0].key_dialogue[0].clone()], Some(game.npcs[0].first_name.clone()), Some(game.npcs[0].stock.clone()));
+        }
+
         //Draw text elements, they will still fall behind root_ui elements
         draw_text(&format!("Cash: {:.2}", game.player.cash), sw * 0.05, sh * 0.05, 28.0, WHITE);
         draw_text(&format!("Conservation: {:.2}", game.player.conservation_points), sw * 0.3, sh * 0.05, 28.0, WHITE);

@@ -18,6 +18,7 @@ pub struct  GameState {
     pub popups: systems::popup::PopupQueue,
     #[serde(skip)]
     pub paused: bool,
+    pub npcs: Vec<systems::npc::NPC>,
 
 }
 
@@ -32,6 +33,7 @@ impl GameState {
             max_offline_time: 172800.0, //Default for now to 2 days in seconds of offline time
             popups: systems::popup::PopupQueue::new(),
             paused: false, //Gameshould start running not paused
+            npcs: systems::npc::load_npc_data(),
         }
     }
 
@@ -45,7 +47,7 @@ impl GameState {
             self.tick();
         }
         //println!("[DBG]Player was away for {} seconds", seconds_passed);
-        self.popups.push_modal(vec![format!("You were away for {} seconds", seconds_passed), String::from("Next line to check it works")]);
+        self.popups.push_modal(vec![format!("You were away for {} seconds", seconds_passed), String::from("Next line to check it works")], None, None);
     }
 
     pub fn tick(&mut self) {
