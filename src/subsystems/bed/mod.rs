@@ -87,6 +87,10 @@ register_item!("rose", "Rose", "A beautiful rose.", 100.0, 5.0, false);
 register_item!("orchid_seed", "Orchid Seed", "A rare and fussy seed.", 130.0, 8.0, true);
 register_item!("orchid", "Orchid", "An exotic orchid.", 300.0, 8.0, false);
 
+// Seeds from birds - Pumpkin
+register_item!("pumpkin_seed", "Pumpkin Seed", "A seed that grows a pumpkin.", 130.0, 8.0, false);
+register_item!("pumpkin", "Pumpkin", "A Pumpkin.", 300.0, 8.0, false);
+
 // Utility
 register_item!("mulch", "Mulch", "Plant waste.", 0.0, 2.0, false);
 register_item!("compost", "Compost", "Helps seeds sprout and establish faster.", 8.0, 3.0, false);

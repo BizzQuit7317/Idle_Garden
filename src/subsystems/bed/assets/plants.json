@@ -38,5 +38,13 @@
         "dead_id": "plant_feed",
         "ticks_per_stage": [160.0, 240.0, 320.0],
         "water_till_death": 60.0
+    },
+    {
+        "seed_id": "pumpkin_seed",
+        "display_name": "Pumpkin Seed",
+        "produces_id": "pumpkin",
+        "dead_id": "compost",
+        "ticks_per_stage": [80.0, 120.0, 160.0],
+        "water_till_death": 60.0
     }
 ]

@@ -6,7 +6,10 @@
         "dominance": 2.0,
         "base_spawn_weight": 0.8,
         "max_time": 80.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 1.0],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 1.0
     },
     {
@@ -16,7 +19,10 @@
         "dominance": 3.0,
         "base_spawn_weight": 0.7,
         "max_time": 70.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 1.0
     },
     {
@@ -26,7 +32,10 @@
         "dominance": 5.0,
         "base_spawn_weight": 0.6,
         "max_time": 70.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 1.0
     },
     {
@@ -36,7 +45,10 @@
         "dominance": 3.0,
         "base_spawn_weight": 0.65,
         "max_time": 75.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 1.0
     },
     {
@@ -46,7 +58,10 @@
         "dominance": 6.0,
         "base_spawn_weight": 0.5,
         "max_time": 90.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 1.0
     },
     {
@@ -56,7 +71,10 @@
         "dominance": 8.0,
         "base_spawn_weight": 0.6,
         "max_time": 60.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 1.5
     },
     {
@@ -66,7 +84,10 @@
         "dominance": 9.0,
         "base_spawn_weight": 0.3,
         "max_time": 60.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 1.5
     },
     {
@@ -76,7 +97,10 @@
         "dominance": 10.0,
         "base_spawn_weight": 0.2,
         "max_time": 55.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 1.5
     },
     {
@@ -86,7 +110,10 @@
         "dominance": 15.0,
         "base_spawn_weight": 0.5,
         "max_time": 100.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 2.0
     },
     {
@@ -96,7 +123,10 @@
         "dominance": 12.0,
         "base_spawn_weight": 0.45,
         "max_time": 90.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 2.0
     },
     {
@@ -106,7 +136,10 @@
         "dominance": 13.0,
         "base_spawn_weight": 0.3,
         "max_time": 85.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 2.0
     },
     {
@@ -116,7 +149,10 @@
         "dominance": 50.0,
         "base_spawn_weight": 0.2,
         "max_time": 120.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 2.0
     },
     {
@@ -126,7 +162,10 @@
         "dominance": 35.0,
         "base_spawn_weight": 0.25,
         "max_time": 110.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 2.0
     },
     {
@@ -136,7 +175,10 @@
         "dominance": 200.0,
         "base_spawn_weight": 0.05,
         "max_time": 150.0,
-        "drop_table": [],
+        "drop_table": [
+            ["feather", 0.9],
+            ["pumpkin_seed", 5.0]
+        ],
         "base_conservation": 2.0
     }
 ]

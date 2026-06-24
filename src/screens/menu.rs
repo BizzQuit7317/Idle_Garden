@@ -24,6 +24,8 @@ impl Screen for Menu {
         if widgets::Button::new("New Game").position(vec2(sw/2.0, sh/2.0)).size(vec2(200.0, 80.0)).ui(&mut root_ui()) {
             *game = systems::game_state::GameState::new();
             utility::file_control::save_game_json(game);
+            let remaining_dialogue = game.npcs[0].key_dialogue[game.npcs[0].key_dialogue_index..].to_vec();
+            game.popups.push_modal(remaining_dialogue, Some(game.npcs[0].first_name.clone()), Some(game.npcs[0].stock.clone()));
             return ScreenTransition::Goto(Box::new(Home::new()));
         }
 

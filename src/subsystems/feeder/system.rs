@@ -155,13 +155,29 @@ pub fn tick_birds(feeder: &mut FeederSystem) {
         *ticker += 1.0;
         let eat_chance = *ticker / bird.max_time;
         let roll: f64 = gen_range(0.0, 1.0);
+        let drop_roll: f64 = gen_range(0.0, 1.0);
 
         if roll < eat_chance {
             // bird eats and leaves
             food_consumed += 1;
+
+            for (item, drop_chance) in bird.drop_table.clone() {
+                if drop_roll <= drop_chance {
+                    *feeder.dropped_items.entry(item.clone()).or_insert(0) += 1;
+                }
+            }
+
             false
         } else if *ticker >= bird.max_time {
             // bird times out and leaves without eating
+            let drop_roll: f64 = gen_range(0.0, 1.0);
+
+            for (item, drop_chance) in bird.drop_table.clone() {
+                if drop_roll <= drop_chance {
+                    *feeder.dropped_items.entry(item.clone()).or_insert(0) += 1;
+                }
+            }
+
             false
         } else {
             // bird stays
@@ -199,6 +215,11 @@ pub fn tick(feeder: &mut FeederSystem, ctx: &ResourceContext) -> SubsystemOutput
         feeder.current_food = Some(def);
         //Build the bird pool here for each time food is added
         feeder.bird_pool = build_bird_pool(&feeder.bird_definitions, feeder.current_feeder.as_ref().unwrap(), feeder.current_food.as_ref().unwrap()); 
+    }
+
+    // Handle pending items
+    for (item, amount) in feeder.pending_items.drain() {
+        output.items_produced.push((item, amount.into()));
     }
 
     // Decay logic

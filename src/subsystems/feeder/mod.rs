@@ -6,6 +6,7 @@ use macroquad::ui::{root_ui, widgets};
 use serde::{Serialize, Deserialize};
 use crate::subsystems::{Subsystem, SubsystemRegistration, ResourceContext, SubsystemOutput, ItemDefinition};
 use crate::systems::player::Property;
+use std::collections::HashMap;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FeederSystem {
@@ -16,12 +17,14 @@ pub struct FeederSystem {
     pub bird_pool: Vec<(system::BirdDefinition, f64)>, //(bird, spawn weight)
     pub pending_feeder: Option<system::FeederDefinition>,
     pub pending_food: Option<system::FoodDefinition>,
+    pub pending_items: HashMap<String, u32>,
     pub selected_item: Option<String>, // tracks what the player clicked in inventory
     pub feeder_definitions: Vec<system::FeederDefinition>,
     pub food_definitions: Vec<system::FoodDefinition>,
     pub bird_definitions: Vec<system::BirdDefinition>,
     pub decay_rate_ticker: f64,
     pub spawn_ticker: f64,
+    pub dropped_items: HashMap<String, u32>,
 }
 
 impl FeederSystem {
@@ -34,12 +37,14 @@ impl FeederSystem {
             bird_pool: vec![],
             pending_feeder: None,
             pending_food: None,
+            pending_items: HashMap::new(),
             selected_item: None,
             feeder_definitions: system::load_feeder_definitions(),
             food_definitions: system::load_food_definitions(),
             bird_definitions: system::load_bird_definitions(),
             decay_rate_ticker: 0.0,
             spawn_ticker: 10.0, //base cooldown
+            dropped_items: HashMap::new(),
         }
     }
 }
