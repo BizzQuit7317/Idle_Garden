@@ -85,3 +85,4 @@ register_item!("feather", "Feather", "A small feather left behind by a visiting 
 register_item!("small_cage", "Small Cage Feeder", "A small cage feeder", 1.0, 1.0, false);
 register_item!("medium_cage", "Medium Cage Feeder", "A medium cage feeder", 1.0, 1.0, false);
 register_item!("platform", "Platform Feeder", "A flat platform feeder open to all birds", 1.0, 1.0, false);
+register_item!("worm", "Worm", "A juicy worms birds and fish can't resist", 1.0, 1.0, false);

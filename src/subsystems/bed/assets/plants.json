@@ -2,7 +2,10 @@
     {
         "seed_id": "grass_seeds",
         "display_name": "Grass Seeds",
-        "produces": [["grass", 1.0]],
+        "produces": [
+            ["grass", 1.0],
+            ["worm", 0.5]
+        ],
         "dead_drops": [["mulch", 1.0]],
         "ticks_per_stage": [10.0, 15.0, 20.0],
         "water_till_death": 25.0

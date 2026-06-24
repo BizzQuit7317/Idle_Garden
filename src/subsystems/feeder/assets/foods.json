@@ -24,5 +24,19 @@
             "Corvids": 0.1,
             "Raptors": 0.0
         }
+    },
+    {
+        "food_id": "worm",
+        "display_name": "Worm",
+        "quantity": 100,
+        "decay_rate": 40.0,
+        "attractiveness": {
+            "SmallPearching": 0.5,
+            "Starlings": 0.5,
+            "Doves": 0.5,
+            "Corvids": 0.5,
+            "Raptors": 0.5
+        }
     }
+    
 ]
