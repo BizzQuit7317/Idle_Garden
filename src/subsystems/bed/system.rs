@@ -1,6 +1,6 @@
 use super::BedSystem;
 use crate::subsystems::{ResourceContext, SubsystemOutput};
-
+use macroquad::rand::gen_range;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
@@ -17,8 +17,8 @@ pub enum PlantStage {
 pub struct PlantDefinition {
     pub seed_id: String,
     pub display_name: String,
-    pub produces_id: String,
-    pub dead_id: String,
+    pub produces: Vec<(String, f64)>,
+    pub dead_drops: Vec<(String, f64)>,
     pub ticks_per_stage: Vec<f64>,
     pub water_till_death: f64
 }
@@ -149,7 +149,12 @@ pub fn tick(bed: &mut BedSystem, ctx: &ResourceContext) -> SubsystemOutput {
         if let Some(spot) = bed.growing_spots.get_mut(spot_index) {
             if let Some(seed_id) = spot.harvest() {
                 if let Some(def) = bed.plant_definitions.iter().find(|p| p.seed_id == seed_id) {
-                    output.items_produced.push((def.produces_id.clone(), 1));
+                    for (item, chance) in &def.produces {
+                        let roll: f64 = gen_range(0.0, 1.0);
+                        if roll <= *chance {
+                            output.items_produced.push((item.clone(), 1));
+                        }
+                    }
                 }
             }
         }
@@ -160,7 +165,12 @@ pub fn tick(bed: &mut BedSystem, ctx: &ResourceContext) -> SubsystemOutput {
         if let Some(spot) = bed.growing_spots.get_mut(spot_index) {
             if let Some(seed_id) = spot.clear_dead() {
                 if let Some(def) = bed.plant_definitions.iter().find(|p| p.seed_id == seed_id) {
-                    output.items_produced.push((def.dead_id.clone(), 1));
+                    for (item, chance) in &def.dead_drops {
+                        let roll: f64 = gen_range(0.0, 1.0);
+                        if roll <= *chance {
+                            output.items_produced.push((item.clone(), 1));
+                        }
+                    }
                 }
             }
         }

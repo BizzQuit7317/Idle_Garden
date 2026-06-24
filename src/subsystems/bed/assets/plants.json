@@ -2,48 +2,48 @@
     {
         "seed_id": "grass_seeds",
         "display_name": "Grass Seeds",
-        "produces_id": "grass",
-        "dead_id": "mulch",
+        "produces": [["grass", 1.0]],
+        "dead_drops": [["mulch", 1.0]],
         "ticks_per_stage": [10.0, 15.0, 20.0],
         "water_till_death": 25.0
     },
     {
         "seed_id": "blue_flower_seed",
         "display_name": "Blue Flower Seed",
-        "produces_id": "blue_flower",
-        "dead_id": "mulch",
+        "produces": [["blue_flower", 1.0]],
+        "dead_drops": [["mulch", 1.0]],
         "ticks_per_stage": [20.0, 30.0, 40.0],
         "water_till_death": 30.0
     },
     {
         "seed_id": "sunflower_seed",
         "display_name": "Sun Flower Seed",
-        "produces_id": "sunflower",
-        "dead_id": "compost",
+        "produces": [["sunflower", 1.0]],
+        "dead_drops": [["compost", 1.0]],
         "ticks_per_stage": [40.0, 60.0, 80.0],
         "water_till_death": 40.0
     },
     {
         "seed_id": "rose_seed",
         "display_name": "Rose Seed",
-        "produces_id": "rose",
-        "dead_id": "compost",
+        "produces": [["rose", 1.0]],
+        "dead_drops": [["compost", 1.0]],
         "ticks_per_stage": [80.0, 120.0, 160.0],
         "water_till_death": 50.0
     },
     {
         "seed_id": "orchid_seed",
         "display_name": "Orchid Seed",
-        "produces_id": "orchid",
-        "dead_id": "plant_feed",
+        "produces": [["orchid", 1.0]],
+        "dead_drops": [["plant_feed", 1.0]],
         "ticks_per_stage": [160.0, 240.0, 320.0],
         "water_till_death": 60.0
     },
     {
         "seed_id": "pumpkin_seed",
         "display_name": "Pumpkin Seed",
-        "produces_id": "pumpkin",
-        "dead_id": "compost",
+        "produces": [["pumpkin", 1.0]],
+        "dead_drops": [["compost", 1.0]],
         "ticks_per_stage": [80.0, 120.0, 160.0],
         "water_till_death": 60.0
     }
