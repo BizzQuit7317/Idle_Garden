@@ -7,6 +7,7 @@ use crate::systems;
 use crate::screens::screen::{Screen, ScreenTransition};
 use crate::screens::store::Store;
 use crate::screens::player_inventory::PlayerInventory;
+use crate::screens::rebirth::Rebirth;
 use crate::subsystems::{available_subsystems, get_item_definition};
 
 pub struct Home {
@@ -80,6 +81,15 @@ impl Screen for Home {
             .ui(&mut root_ui())
         {
             return ScreenTransition::Goto(Box::new(Store::new()));
+        }
+
+	//yes I know its out of line but its just temporary
+	if widgets::Button::new("Go to Rebirth")
+            .position(vec2(sw * 0.1, sh * 0.6))
+            .size(vec2(200.0, 80.0))
+            .ui(&mut root_ui())
+        {
+            return ScreenTransition::Goto(Box::new(Rebirth::new()));
         }
 
         // Slot buttons — only drawn when no overlay is open

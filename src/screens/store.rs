@@ -7,6 +7,7 @@ use crate::systems;
 use crate::screens::screen::{Screen, ScreenTransition};
 use crate::screens::home::Home;
 use crate::screens::player_inventory::PlayerInventory;
+use crate::screens::rebirth::Rebirth;
 use crate::subsystems::get_item_definition;
 
 pub enum StoreTab {
