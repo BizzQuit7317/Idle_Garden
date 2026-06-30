@@ -2,8 +2,8 @@
     {
         "food_id": "bird_feed",
         "display_name": "Bird Feed",
-        "quantity": 50,
-        "decay_rate": 80.0,
+        "quantity": 30,
+        "decay_rate": 60.0,
         "attractiveness": {
             "SmallPearching": 0.6,
             "Starlings": 0.5,
@@ -15,8 +15,8 @@
     {
         "food_id": "sunflower_seed",
         "display_name": "Sunflower Seed",
-        "quantity": 75,
-        "decay_rate": 40.0,
+        "quantity": 40,
+        "decay_rate": 35.0,
         "attractiveness": {
             "SmallPearching": 0.9,
             "Starlings": 0.4,
@@ -28,15 +28,14 @@
     {
         "food_id": "worm",
         "display_name": "Worm",
-        "quantity": 100,
-        "decay_rate": 40.0,
+        "quantity": 50,
+        "decay_rate": 30.0,
         "attractiveness": {
-            "SmallPearching": 0.5,
+            "SmallPearching": 0.4,
             "Starlings": 0.5,
-            "Doves": 0.5,
-            "Corvids": 0.5,
+            "Doves": 0.4,
+            "Corvids": 0.6,
             "Raptors": 0.5
         }
     }
-    
 ]

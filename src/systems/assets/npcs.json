@@ -4,8 +4,10 @@
         "family_name": "Gray",
         "first_name": "Chancla",
         "key_dialogue": [
-            "Welcome to the garden.",
-            "Here we are try to bring some nature to us."
+            "Welcome to the garden. Some generic stuff about the game and gardens and blah blah",
+            "You can start by setting up a Bird Feeder and Bed, Rememeber once you use a slot it cannot be changed until the next generation!",
+            "In the Flower Bed you can plant seeds and harvest them for crops and a small chance to get rare items, be warned tho your plants can also wither away!",
+            "In the Bird Feeder you can select a feeder and try differnt types of foods to attract differnt birds!"
         ],
         "key_dialogue_index": 0,
         "ambient_dialogue": [

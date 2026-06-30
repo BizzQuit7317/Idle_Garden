@@ -1,5 +1,8 @@
 use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
+use std::fs::File;
+use std::io::{self, BufRead, BufWriter};
+use rand::Rng;
 
 use crate::subsystems::Subsystem;
 
@@ -106,22 +109,22 @@ pub struct Player {
     pub conservation_points: f64,
 
     pub inventory: Inventory,
+
+    pub family_name: String,
+    pub first_name:  String,
+    pub generation: u8,
 }
 
 impl Player {
     pub fn new() -> Player {
         let mut inventory = Inventory::new();
         inventory.add("grass_seeds", 5); //Starting the player with 5 grass seeds
-        inventory.add("growth_powder", 1); //testing fertilisers
         inventory.add("small_cage", 1); //testing the feeder
-        inventory.add("bird_feed", 3); //testing the feeder
-        inventory.add("medium_cage", 1);
-        inventory.add("platform", 1);
 
         let property = Property::Balcony;
         let max_slots = property.max_slots();
 
-        Player {
+        let mut player = Player {
             property, //Set the default new user to have the Balcony house
             max_slots,
             slots: (0..max_slots).map(|_| None).collect(), 
@@ -130,7 +133,14 @@ impl Player {
             conservation_points: 0.0, //Start with no conservation
 
             inventory,
-        }
+
+            family_name: String::new(),
+    	    first_name:  String::new(),
+    	    generation: 0,
+        };
+
+	player.pick_name();
+	player
     }
 
     pub fn upgrade_property(&mut self) -> bool {
@@ -150,4 +160,29 @@ impl Player {
         }
         false
     }
+
+    pub fn pick_name(&mut self) {
+        let file = match File::open("src/systems/assets/names.txt") {
+            Ok(f) => f,
+            Err(_) => return, // file missing — leave name as-is
+        };
+        let reader = io::BufReader::new(file);
+        let mut rng = rand::thread_rng();
+        let mut count: u64 = 0;
+
+    	for line in reader.lines() {
+            let line = match line {
+                Ok(l) => l,
+                Err(_) => continue, // skip unreadable line
+            };
+            if line.trim().is_empty() {
+                continue;
+            }
+            count += 1;
+            if rng.gen_range(0..count) == 0 {
+                self.first_name = line.trim().to_string();
+            }
+        }
+    }
+
 }

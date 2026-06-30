@@ -43,6 +43,9 @@ impl Screen for Home {
         //Draw text elements, they will still fall behind root_ui elements
         draw_text(&format!("Cash: {:.2}", game.player.cash), sw * 0.05, sh * 0.05, 28.0, WHITE);
         draw_text(&format!("Conservation: {:.2}", game.player.conservation_points), sw * 0.3, sh * 0.05, 28.0, WHITE);
+	draw_text(&format!("First Name: {}", game.player.family_name), sw * 0.7, sh * 0.05, 28.0, WHITE);
+	draw_text(&format!("Family Name: {}", game.player.first_name), sw * 0.7, sh * 0.10, 28.0, WHITE);
+	draw_text(&format!("Generation: {}", game.player.generation), sw * 0.7, sh * 0.15, 28.0, WHITE);
 
         // Save Button
         if widgets::Button::new("Save")

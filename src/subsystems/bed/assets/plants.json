@@ -4,7 +4,7 @@
         "display_name": "Grass Seeds",
         "produces": [
             ["grass", 1.0],
-            ["worm", 0.5]
+            ["worm", 0.25]
         ],
         "dead_drops": [["mulch", 1.0]],
         "ticks_per_stage": [10.0, 15.0, 20.0],
@@ -21,7 +21,10 @@
     {
         "seed_id": "sunflower_seed",
         "display_name": "Sun Flower Seed",
-        "produces": [["sunflower", 1.0]],
+        "produces": [
+            ["sunflower", 1.0],
+            ["sunflower_seed", 0.5]
+        ],
         "dead_drops": [["compost", 1.0]],
         "ticks_per_stage": [40.0, 60.0, 80.0],
         "water_till_death": 40.0
