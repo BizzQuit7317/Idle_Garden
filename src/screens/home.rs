@@ -120,6 +120,7 @@ impl Screen for Home {
                 cash: game.player.cash,
                 conservation_points: game.player.conservation_points,
                 inventory: game.player.inventory.items.clone(),
+                npcs: game.npcs.clone(),
             };
 
             if let Some(Some(subsystem)) = game.player.slots.get_mut(i) {

@@ -1,13 +1,13 @@
 use crate::systems::store_state::StoreItem;
 use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum NPCViewState { 
     Dialogue, 
     Store 
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct NPC {
     pub id: String,
     pub family_name: String,

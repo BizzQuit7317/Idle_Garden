@@ -4,7 +4,7 @@ use serde::{Serialize, Deserialize};
 use crate::systems::store_state::StoreItem;
 use crate::systems::npc::NPCViewState;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Toast {
     pub message: String,
     pub x: f32,
@@ -12,7 +12,7 @@ pub struct Toast {
     pub lifetime: f64,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Modal {
     pub message: Vec<String>,
     pub dismissed: bool,
@@ -23,7 +23,7 @@ pub struct Modal {
     pub current_line: usize,
 }
 
-#[derive(Debug, Serialize, Deserialize, Default)]
+#[derive(Debug, Serialize, Deserialize, Default, Clone)]
 pub struct PopupQueue {
     pub toasts: Vec<Toast>,
     pub modals: Vec<Modal>,

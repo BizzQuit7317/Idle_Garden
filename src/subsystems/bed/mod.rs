@@ -6,10 +6,13 @@ use macroquad::ui::{root_ui, widgets};
 use serde::{Serialize, Deserialize};
 use crate::subsystems::{Subsystem, SubsystemRegistration, ResourceContext, SubsystemOutput, ItemDefinition};
 use crate::systems::player::Property;
+use std::collections::HashMap;
+use crate::systems::npc::NPC;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BedSystem {
-    pub soil_quality: u8,
+    pub npc_id: String,
+    pub bed_level: u32,
     pub growing_spots: Vec<system::GrowingSpot>,
     pub selected_item: Option<String>, // tracks what the player clicked in inventory
     pub pending_plant: Option<(usize, String)>, // (spot index, item id)
@@ -17,14 +20,16 @@ pub struct BedSystem {
     pub pending_waste: Option<usize>,
     pub pending_fertilise: Option<(usize, String)>,
     pub plant_definitions: Vec<system::PlantDefinition>,
-    pub fertiliser_definitions: Vec<system::FertiliserDefinition>
+    pub fertiliser_definitions: Vec<system::FertiliserDefinition>,
+    pub auto_harvested_items: HashMap<String, u32>,
 }
 
 impl BedSystem {
     pub fn new() -> BedSystem {
         BedSystem {
-            soil_quality: 0,
-            growing_spots: vec![system::GrowingSpot::new(); 9],
+            npc_id: String::from("bed_npc"),
+            bed_level: 1,
+            growing_spots: vec![system::GrowingSpot::new(); 1], //Player starts with 1 by defaults
             selected_item: None,
             pending_plant: None,
             pending_harvest: None,
@@ -32,6 +37,7 @@ impl BedSystem {
             pending_fertilise: None,
             plant_definitions: system::load_plant_definitions(),
             fertiliser_definitions: system::load_fertiliser_definitions(),
+            auto_harvested_items: HashMap::new(),
         }
     }
 }

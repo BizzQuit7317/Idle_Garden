@@ -55,6 +55,7 @@ impl GameState {
             cash: self.player.cash,
             conservation_points: self.player.conservation_points,
             inventory: self.player.inventory.items.clone(),
+            npcs: self.npcs.clone(),
         };
 
         for slot in self.player.slots.iter_mut() {

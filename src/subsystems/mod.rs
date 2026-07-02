@@ -2,11 +2,13 @@ use std::fmt::Debug;
 use std::collections::HashMap;
 
 use crate::systems::player::Property;
+use crate::systems::npc::NPC;
 
 pub struct  ResourceContext {
     pub cash: f64,
     pub conservation_points: f64,
     pub inventory: HashMap<String, u64>,
+    pub npcs: Vec<NPC>,
 }
 
 pub struct SubsystemOutput {
