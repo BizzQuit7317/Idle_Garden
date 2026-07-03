@@ -8,6 +8,7 @@ use crate::subsystems::{Subsystem, SubsystemRegistration, ResourceContext, Subsy
 use crate::systems::player::Property;
 use std::collections::HashMap;
 use crate::systems::npc::NPC;
+use crate::systems::popup::Modal;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BedSystem {
@@ -22,6 +23,8 @@ pub struct BedSystem {
     pub plant_definitions: Vec<system::PlantDefinition>,
     pub fertiliser_definitions: Vec<system::FertiliserDefinition>,
     pub auto_harvested_items: HashMap<String, u32>,
+    #[serde(skip)]
+    pub pending_modals: Vec<Modal>
 }
 
 impl BedSystem {
@@ -38,6 +41,7 @@ impl BedSystem {
             plant_definitions: system::load_plant_definitions(),
             fertiliser_definitions: system::load_fertiliser_definitions(),
             auto_harvested_items: HashMap::new(),
+            pending_modals: vec![],
         }
     }
 }

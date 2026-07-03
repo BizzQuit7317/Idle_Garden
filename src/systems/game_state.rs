@@ -69,6 +69,10 @@ impl GameState {
                 for (item, amount) in output.items_consumed {
                     self.player.inventory.remove(&item, amount);
                 }
+                for modal in output.modals {
+                    println!("{:?}", modal);
+                    self.popups.modals.push(modal);
+                }
             }
         }
 

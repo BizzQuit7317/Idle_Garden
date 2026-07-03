@@ -3,6 +3,7 @@ use std::collections::HashMap;
 
 use crate::systems::player::Property;
 use crate::systems::npc::NPC;
+use crate::systems::popup::Modal;
 
 pub struct  ResourceContext {
     pub cash: f64,
@@ -16,6 +17,7 @@ pub struct SubsystemOutput {
     pub cash_delta: f64,
     pub items_produced: Vec<(String, u64)>,
     pub items_consumed: Vec<(String, u64)>,
+    pub modals: Vec<Modal>,
 }
 
 impl SubsystemOutput {
@@ -25,6 +27,7 @@ impl SubsystemOutput {
             cash_delta: 0.0,
             items_produced: Vec::new(),
             items_consumed: Vec::new(),
+            modals: Vec::new(),
         }
     }
 }

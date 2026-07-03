@@ -2,6 +2,8 @@ use macroquad::prelude::*;
 use macroquad::ui::{Ui, hash, widgets};
 use crate::subsystems::bed::system::{GrowingSpot, PlantStage};
 use crate::subsystems::ResourceContext;
+use crate::systems::popup::Modal;
+use crate::systems::npc::NPCViewState;
 
 pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &ResourceContext) {
     ui.label(None, "=== Bed System ===");
@@ -19,7 +21,16 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
     }
 
     if ui.button(None, "Bed NPC") {
-        println!("Bed NPC: {:?}", bed_npc.key_dialogue[bed_npc.key_dialogue_index]);
+        //println!("Bed NPC: {:?}", bed_npc.key_dialogue[bed_npc.key_dialogue_index]);
+        bed.pending_modals.push(Modal {
+            message: bed_npc.key_dialogue.clone(), 
+            dismissed: false, 
+            npc_flag: true,
+            npc_name: Some(bed_npc.family_name.clone()),
+            npc_state: Some(NPCViewState::Dialogue), // start in Dialogue if NPC
+            npc_stock: Some(bed_npc.stock.clone()),
+            current_line: 0,
+        });
     }
 
     ui.separator();

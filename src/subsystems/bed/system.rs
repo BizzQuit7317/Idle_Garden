@@ -2,6 +2,7 @@ use super::BedSystem;
 use crate::subsystems::{ResourceContext, SubsystemOutput};
 use macroquad::rand::gen_range;
 use serde::{Serialize, Deserialize};
+use crate::systems::popup::Modal;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum PlantStage {
@@ -174,6 +175,11 @@ pub fn tick(bed: &mut BedSystem, ctx: &ResourceContext) -> SubsystemOutput {
                 }
             }
         }
+    }
+
+    //Handle pending modals
+    for modal in bed.pending_modals.drain(..) {
+        output.modals.push(modal);
     }
 
     // Grow loop
