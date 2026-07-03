@@ -22,13 +22,18 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
 
     if ui.button(None, "Bed NPC") {
         //println!("Bed NPC: {:?}", bed_npc.key_dialogue[bed_npc.key_dialogue_index]);
+        let remaining_dialogue_index = bed.bed_level as usize - 1;
+        let remaining_dialogue:Vec<String>  = bed_npc.key_dialogue[remaining_dialogue_index].clone().split("||").map(String::from).collect();
+
+        println!("{:?}", remaining_dialogue_index);
+
         bed.pending_modals.push(Modal {
-            message: bed_npc.key_dialogue.clone(), 
+            message: remaining_dialogue, 
             dismissed: false, 
             npc_flag: true,
             npc_name: Some(bed_npc.family_name.clone()),
             npc_state: Some(NPCViewState::Dialogue), // start in Dialogue if NPC
-            current_line: 0,
+            current_line: 0, //so remaining dialoguee always starts at 0
         });
     }
 

@@ -20,7 +20,9 @@
         "family_name": "Bloom",
         "first_name": "Iris",
         "key_dialogue": [
-            "I specialize in beds. Need more space for your plants?"
+            "I specialize in beds. Need more space for your plants?||You can buy additional plots with the upgrade!",
+            "Now that you have a second plot you should think about fertilising",
+            "Perhaps its time to start thinking about automation"
         ],
         "key_dialogue_index": 0,
         "ambient_dialogue": [
