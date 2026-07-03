@@ -13,8 +13,7 @@
         "ambient_dialogue": [
             "How's the garden treating you?"
         ],
-        "generation": 0,
-        "stock": []
+        "generation": 0
     },
     {
         "id": "bed_npc",
@@ -27,16 +26,7 @@
         "ambient_dialogue": [
             "Your beds are looking healthy."
         ],
-        "generation": 1,
-        "stock": [
-            {
-                "item_id": "blue_flower_seed",
-                "price": 1.0,
-                "quantity_available": 50,
-                "conservation_price": 200.0,
-                "in_store": true
-            }
-        ]
+        "generation": 1
     },
     {
         "id": "feeder_npc",
@@ -49,7 +39,6 @@
         "ambient_dialogue": [
             "The birds are quite active today."
         ],
-        "generation": 1,
-        "stock": []
+        "generation": 1
     }
 ]

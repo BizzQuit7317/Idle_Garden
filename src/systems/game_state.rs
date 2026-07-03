@@ -47,7 +47,7 @@ impl GameState {
             self.tick();
         }
         //println!("[DBG]Player was away for {} seconds", seconds_passed);
-        self.popups.push_modal(vec![format!("You were away for {} seconds", seconds_passed), String::from("Next line to check it works")], None, None);
+        self.popups.push_modal(vec![format!("You were away for {} seconds", seconds_passed), String::from("Next line to check it works")], None);
     }
 
     pub fn tick(&mut self) {
@@ -70,7 +70,6 @@ impl GameState {
                     self.player.inventory.remove(&item, amount);
                 }
                 for modal in output.modals {
-                    println!("{:?}", modal);
                     self.popups.modals.push(modal);
                 }
             }

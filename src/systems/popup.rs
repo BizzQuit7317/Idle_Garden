@@ -1,7 +1,6 @@
 use macroquad::prelude::*;
 use macroquad::ui::{root_ui, widgets, hash};
 use serde::{Serialize, Deserialize};
-use crate::systems::store_state::StoreItem;
 use crate::systems::npc::NPCViewState;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -18,8 +17,7 @@ pub struct Modal {
     pub dismissed: bool,
     pub npc_flag: bool, //true if for npc, false if regular message
     pub npc_name: Option<String>, //if npc need to take string otherwise useless
-    pub npc_state: Option<NPCViewState>, //true if npc dialogue, false if npc store
-    pub npc_stock: Option<Vec<StoreItem>>, //a refernce to the npc stock to display
+    pub npc_state: Option<NPCViewState>, //dialogue state if npc
     pub current_line: usize,
 }
 
@@ -41,14 +39,13 @@ impl PopupQueue {
         self.toasts.push(Toast { message, x, y, lifetime });
     }
 
-    pub fn push_modal(&mut self, message: Vec<String>, npc_name: Option<String>, npc_stock: Option<Vec<StoreItem>>) {
+    pub fn push_modal(&mut self, message: Vec<String>, npc_name: Option<String>) {
         self.modals.push(Modal { 
             message, 
             dismissed: false, 
             npc_flag: npc_name.is_some(),
             npc_name: npc_name.clone(),
             npc_state: npc_name.as_ref().map(|_| NPCViewState::Dialogue), // start in Dialogue if NPC
-            npc_stock,
             current_line: 0,
         });
     }
@@ -77,7 +74,6 @@ impl PopupQueue {
                         let current_line = self.modals[i].message[self.modals[i].current_line].clone();
                         let npc_name = self.modals[i].npc_name.clone().unwrap_or("Unknown".to_string());
                         let mut close = false;
-                        let mut switch_to_store = false;
 
                         draw_rectangle(0.0, 0.0, sw, sh, Color::new(0.0, 0.0, 0.0, 0.5));
 
@@ -102,9 +98,6 @@ impl PopupQueue {
                                         self.modals[i].current_line += 1;
                                     }
                                 }
-                                if ui.button(None, "View Upgrades") {
-                                    switch_to_store = true;
-                                }
                                 if ui.button(None, "Close") {
                                     close = true;
                                 }
@@ -124,71 +117,6 @@ impl PopupQueue {
 
                         if close {
                             self.modals[i].dismissed = true;
-                        } else if switch_to_store {
-                            self.modals[i].npc_state = Some(NPCViewState::Store);
-                        }
-                    },
-                    Some(NPCViewState::Store) => {
-                        let npc_name = self.modals[i].npc_name.clone().unwrap_or("Unknown".to_string());
-                        let stock = self.modals[i].npc_stock.clone().unwrap_or_default();
-                        let mut close = false;
-                        let mut switch_to_dialogue = false;
-
-                        draw_rectangle(0.0, 0.0, sw, sh, Color::new(0.0, 0.0, 0.0, 0.5));
-
-                        // NPC character box
-                        root_ui().window(
-                            hash!("npc_character", i),
-                            vec2(sw * 0.65, sh * 0.3),
-                            vec2(sw * 0.15, sh * 0.45),
-                            |ui| {
-                                ui.label(None, "[Character]");
-                            }
-                        );
-
-                        // NPC store window
-                        root_ui().window(
-                            hash!("npc_store", i),
-                            vec2(0.0, sh * 0.75),
-                            vec2(sw, sh * 0.25),
-                            |ui| {
-                                if ui.button(None, "Back") {
-                                    switch_to_dialogue = true;
-                                }
-                                if ui.button(None, "Close") {
-                                    close = true;
-                                }
-                                ui.label(None, "Upgrades:");
-
-                                for (item_index, item) in stock.iter().enumerate() {
-                                    // Look up the display name; fall back to the raw id if not found
-                                    let display_name = crate::subsystems::get_item_definition(&item.item_id)
-                                        .map(|d| d.display_name)
-                                        .unwrap_or(item.item_id.as_str());
-
-                                    let label = format!("{} - {} cash##{}", display_name, item.price, item_index);
-
-                                    if ui.button(None, label.as_str()) {
-                                        println!("[DBG] Clicked store item: {} ({})", display_name, item.item_id); //replace withh tor buying logic at some point
-                                    }
-                                }
-                            }
-                        );
-
-                        // NPC name box
-                        draw_rectangle(sw * 0.02, sh * 0.72, sw * 0.15, sh * 0.05, Color::new(0.2, 0.2, 0.2, 1.0));
-                        draw_text(
-                            &npc_name,
-                            sw * 0.04,
-                            sh * 0.745,
-                            20.0,
-                            WHITE
-                        );
-
-                        if close {
-                            self.modals[i].dismissed = true;
-                        } else if switch_to_dialogue {
-                            self.modals[i].npc_state = Some(NPCViewState::Dialogue);
                         }
                     },
                     None => {}

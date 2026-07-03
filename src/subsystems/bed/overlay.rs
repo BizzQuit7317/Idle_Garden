@@ -28,7 +28,6 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
             npc_flag: true,
             npc_name: Some(bed_npc.family_name.clone()),
             npc_state: Some(NPCViewState::Dialogue), // start in Dialogue if NPC
-            npc_stock: Some(bed_npc.stock.clone()),
             current_line: 0,
         });
     }

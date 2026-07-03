@@ -73,7 +73,6 @@ impl Screen for ConfirmNew {
                 game.popups.push_modal(
                     remaining_dialogue,
                     Some(game.npcs[0].first_name.clone()),
-                    Some(game.npcs[0].stock.clone()),
                 );
                 return ScreenTransition::Goto(Box::new(Home::new()));
             }
