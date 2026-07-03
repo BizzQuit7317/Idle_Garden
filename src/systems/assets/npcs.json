@@ -28,7 +28,15 @@
             "Your beds are looking healthy."
         ],
         "generation": 1,
-        "stock": []
+        "stock": [
+            {
+                "item_id": "blue_flower_seed",
+                "price": 1.0,
+                "quantity_available": 50,
+                "conservation_price": 200.0,
+                "in_store": true
+            }
+        ]
     },
     {
         "id": "feeder_npc",

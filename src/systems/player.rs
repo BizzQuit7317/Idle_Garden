@@ -129,7 +129,7 @@ impl Player {
             max_slots,
             slots: (0..max_slots).map(|_| None).collect(), 
 
-            cash: 0.0, //Start with no money
+            cash: 5000.0, //Start with no money
             conservation_points: 0.0, //Start with no conservation
 
             inventory,

@@ -182,6 +182,18 @@ pub fn tick(bed: &mut BedSystem, ctx: &ResourceContext) -> SubsystemOutput {
         output.modals.push(modal);
     }
 
+    //Handle pending upgradee
+    if bed.pending_upgrade {
+        //let price = 100.0 * bed.bed_level as f64;
+        if ctx.cash >= bed.upgrade_price {
+            bed.growing_spots.push(GrowingSpot::new());
+            bed.bed_level += 1;
+            output.cash_delta -= bed.upgrade_price;
+            bed.upgrade_price *= bed.bed_level as f64;
+        }
+        bed.pending_upgrade = false;
+    }
+
     // Grow loop
     for spot in &mut bed.growing_spots {
         if let Some(ref seed_id) = spot.plant {

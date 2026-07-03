@@ -24,7 +24,9 @@ pub struct BedSystem {
     pub fertiliser_definitions: Vec<system::FertiliserDefinition>,
     pub auto_harvested_items: HashMap<String, u32>,
     #[serde(skip)]
-    pub pending_modals: Vec<Modal>
+    pub pending_modals: Vec<Modal>,
+    pub pending_upgrade: bool,
+    pub upgrade_price: f64,
 }
 
 impl BedSystem {
@@ -42,6 +44,8 @@ impl BedSystem {
             fertiliser_definitions: system::load_fertiliser_definitions(),
             auto_harvested_items: HashMap::new(),
             pending_modals: vec![],
+            pending_upgrade: false,
+            upgrade_price: 100.0, //base upgrade
         }
     }
 }

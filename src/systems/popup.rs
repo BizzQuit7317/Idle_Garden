@@ -159,8 +159,18 @@ impl PopupQueue {
                                     close = true;
                                 }
                                 ui.label(None, "Upgrades:");
-                                for item in &stock {
-                                    ui.label(None, &format!("coming soon"));
+
+                                for (item_index, item) in stock.iter().enumerate() {
+                                    // Look up the display name; fall back to the raw id if not found
+                                    let display_name = crate::subsystems::get_item_definition(&item.item_id)
+                                        .map(|d| d.display_name)
+                                        .unwrap_or(item.item_id.as_str());
+
+                                    let label = format!("{} - {} cash##{}", display_name, item.price, item_index);
+
+                                    if ui.button(None, label.as_str()) {
+                                        println!("[DBG] Clicked store item: {} ({})", display_name, item.item_id); //replace withh tor buying logic at some point
+                                    }
                                 }
                             }
                         );

@@ -33,12 +33,20 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
         });
     }
 
+    //Button for system upgrade
+    let upgrade_label = format!("Upgrade Flower Bed: {:.0} Cash", bed.upgrade_price);
+    if ui.button(None, upgrade_label.as_str()) {
+        if ctx.cash > bed.upgrade_price {
+            bed.pending_upgrade = true;
+        }
+    }
+
     ui.separator();
 
     let half_w = screen_width() / 2.0;
     let full_h = screen_height();
 
-    let top_offset = 70.0; // tweak until it clears the close button + label
+    let top_offset = 90.0; // tweak until it clears the close button + label
 
     // LEFT SIDE
     widgets::Group::new(hash!("left_panel"), Vec2::new(half_w, full_h - top_offset))
