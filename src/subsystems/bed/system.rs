@@ -194,10 +194,59 @@ pub fn tick(bed: &mut BedSystem, ctx: &ResourceContext) -> SubsystemOutput {
         bed.pending_upgrade = false;
     }
 
+    //handle pending automate
+    if bed.pending_automate {
+        if ctx.cash >= bed.automate_base_cost {
+            output.cash_delta -= bed.automate_base_cost;
+            bed.automated = true;
+        }
+    }
+
+    //Handle pending collect
+    if bed.pending_collect {
+        for (item, amount) in bed.auto_harvested_items.drain() {
+            output.items_produced.push((item, amount.into()));
+        }
+        bed.pending_collect = false;
+    }
+
     // Grow loop
     for spot in &mut bed.growing_spots {
         if let Some(ref seed_id) = spot.plant {
             if let Some(def) = bed.plant_definitions.iter().find(|p| p.seed_id == *seed_id) {
+
+                //Handle automation
+                if bed.automated {
+                    match spot.stage {
+                        PlantStage::Harvest => { 
+                            if let Some(seed_id) = spot.harvest() {
+                                if let Some(def) = bed.plant_definitions.iter().find(|p| p.seed_id == seed_id) {
+                                    for (item, chance) in &def.produces {
+                                        let roll: f64 = gen_range(0.0, 1.0);
+                                        if roll <= *chance {
+                                            //output.items_produced.push((item.clone(), 1));
+                                            *bed.auto_harvested_items.entry(item.clone()).or_insert(0) += 1;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        PlantStage::Dead => { 
+                            if let Some(seed_id) = spot.clear_dead() {
+                                if let Some(def) = bed.plant_definitions.iter().find(|p| p.seed_id == seed_id) {
+                                    for (item, chance) in &def.dead_drops {
+                                        let roll: f64 = gen_range(0.0, 1.0);
+                                        if roll <= *chance {
+                                            //output.items_produced.push((item.clone(), 1));
+                                            *bed.auto_harvested_items.entry(item.clone()).or_insert(0) += 1;
+                                        }
+                                    }
+                                }
+                            }
+                         }
+                        _ => {}
+                    }
+                }
 
                 let stage_index = match spot.stage {
                     PlantStage::Seed   => 0,

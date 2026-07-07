@@ -27,6 +27,10 @@ pub struct BedSystem {
     pub pending_modals: Vec<Modal>,
     pub pending_upgrade: bool,
     pub upgrade_price: f64,
+    pub automated: bool,
+    pub automate_base_cost: f64,
+    pub pending_automate: bool,
+    pub pending_collect: bool,
 }
 
 impl BedSystem {
@@ -46,6 +50,10 @@ impl BedSystem {
             pending_modals: vec![],
             pending_upgrade: false,
             upgrade_price: 100.0, //base upgrade
+            automated: false, //Only available once player has  5 plots
+            automate_base_cost: 1000.0, //place holder fit with number later
+            pending_automate: false,
+            pending_collect: false,
         }
     }
 }

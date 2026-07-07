@@ -45,12 +45,21 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
         }
     }
 
+    //Button for buyinng auto harvest
+    if !bed.automated && bed.bed_level  > 2 { //5 for teesting to check thee button dosnt spawn early
+        if ui.button(None, "Buy Farm Automation System 1000") { //1000 is a place holdder for testing,swap for bed.automate_base_cost
+            if ctx.cash > bed.automate_base_cost {
+                bed.pending_automate = true;
+            }
+        }
+    }
+
     ui.separator();
 
     let half_w = screen_width() / 2.0;
     let full_h = screen_height();
 
-    let top_offset = 90.0; // tweak until it clears the close button + label
+    let top_offset = 115.0; // tweak until it clears the close button + label
 
     // LEFT SIDE
     widgets::Group::new(hash!("left_panel"), Vec2::new(half_w, full_h - top_offset))
@@ -161,6 +170,10 @@ pub fn draw(ui: &mut Ui, bed: &mut crate::subsystems::bed::BedSystem, ctx: &Reso
             ui.label(None, "Dropped Items");
             let item_label = format!("{:?}", bed.auto_harvested_items);
             ui.label(None, item_label.as_str());
+
+            if ui.button(None, "Collect Items") {
+                bed.pending_collect = true;
+            }
 
             ui.separator();
         });
