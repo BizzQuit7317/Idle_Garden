@@ -2,15 +2,55 @@ use macroquad::prelude::*;
 use macroquad::ui::{Ui, hash, widgets};
 use crate::subsystems::ResourceContext;
 use super::FeederSystem;
+use crate::systems::popup::Modal;
+use crate::systems::npc::NPCViewState;
 
 pub fn draw(ui: &mut Ui, feeder: &mut FeederSystem, ctx: &ResourceContext) { 
     ui.label(None, "=== Feeder System ===");
+
+    //Tempporary location of npc interation button
+    //Get npc index
+    let mut index_counter = 0;
+    let mut feeder_npc = &ctx.npcs[0]; //default to 0 index npc incase of failure
+    for npc in &ctx.npcs {
+        if npc.id == feeder.npc_id {
+            //feeder_npc_index = index_counter;
+            feeder_npc = npc;
+        }
+        index_counter += 1;
+    }
+
+    if ui.button(None, "feeder NPC") {
+        //println!("feeder NPC: {:?}", feeder_npc.key_dialogue[feeder_npc.key_dialogue_index]);
+        let remaining_dialogue_index = feeder.feeder_level as usize - 1;
+        let remaining_dialogue:Vec<String>  = feeder_npc.key_dialogue[remaining_dialogue_index].clone().split("||").map(String::from).collect();
+
+        println!("{:?}", remaining_dialogue_index);
+
+        feeder.pending_modals.push(Modal {
+            message: remaining_dialogue, 
+            dismissed: false, 
+            npc_flag: true,
+            npc_name: Some(feeder_npc.family_name.clone()),
+            npc_state: Some(NPCViewState::Dialogue), // start in Dialogue if NPC
+            current_line: 0, //so remaining dialoguee always starts at 0
+        });
+    }
+
+    //Button for system upgrade
+    let upgrade_label = format!("Upgrade Bird Feeder: {:.0} Cash", feeder.upgrade_price);
+    if ui.button(None, upgrade_label.as_str()) {
+        if ctx.cash > feeder.upgrade_price {
+            feeder.pending_upgrade = true;
+        }
+    }
+
     ui.separator();
 
     let half_w = screen_width() / 2.0;
     let full_h = screen_height();
 
-    let top_offset = 60.0; // tweak until it clears the close button + label
+    let top_offset = 90.0; // tweak until it clears the close button + label
 
     // LEFT SIDE
     widgets::Group::new(hash!("left_panel"), Vec2::new(half_w, full_h - top_offset))

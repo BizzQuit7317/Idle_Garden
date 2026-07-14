@@ -7,9 +7,14 @@ use serde::{Serialize, Deserialize};
 use crate::subsystems::{Subsystem, SubsystemRegistration, ResourceContext, SubsystemOutput, ItemDefinition};
 use crate::systems::player::Property;
 use std::collections::HashMap;
+use crate::systems::npc::NPC;
+use crate::systems::popup::Modal;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FeederSystem {
+    pub npc_id: String,
+    pub feeder_level: u32,
+    pub upgrade_price: f64,
     pub current_feeder: Option<system::FeederDefinition>,
     pub current_food: Option<system::FoodDefinition>,
     pub current_food_amount: u32,
@@ -25,11 +30,17 @@ pub struct FeederSystem {
     pub decay_rate_ticker: f64,
     pub spawn_ticker: f64,
     pub dropped_items: HashMap<String, u32>,
+    #[serde(skip)]
+    pub pending_modals: Vec<Modal>,
+    pub pending_upgrade: bool,
 }
 
 impl FeederSystem {
     pub fn new() -> FeederSystem {
         FeederSystem {
+            npc_id: String::from("feeder_npc"),
+            feeder_level: 1,
+            upgrade_price: 100.0,
             current_feeder: None,
             current_food: None,
             current_food_amount: 0,
@@ -45,6 +56,8 @@ impl FeederSystem {
             decay_rate_ticker: 0.0,
             spawn_ticker: 10.0, //base cooldown
             dropped_items: HashMap::new(),
+            pending_modals: vec![],
+            pending_upgrade: false,
         }
     }
 }

@@ -234,5 +234,22 @@ pub fn tick(feeder: &mut FeederSystem, ctx: &ResourceContext) -> SubsystemOutput
         }
     }
 
+    //Handle pending modals
+    for modal in feeder.pending_modals.drain(..) {
+        output.modals.push(modal);
+    }
+
+    //Handle pending upgradee
+    if feeder.pending_upgrade {
+        //let price = 100.0 * feeder.feeder_level as f64;
+        if ctx.cash >= feeder.upgrade_price {
+            //feeder.growing_spots.push(GrowingSpot::new());
+            feeder.feeder_level += 1;
+            output.cash_delta -= feeder.upgrade_price;
+            feeder.upgrade_price *= feeder.feeder_level as f64;
+        }
+        feeder.pending_upgrade = false;
+    }
+
     output
 }
