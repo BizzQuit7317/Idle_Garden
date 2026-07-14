@@ -317,6 +317,9 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 - [ ] **Harvest all button** — single click to harvest all spots that are ready rather than clicking each one individually
 - [x] **Sticky selection** — selected item stays selected until either a different item is chosen or the player runs out of that item, so planting a full bed of grass seeds doesn't require re-clicking after every spot
 
+### Feeder
+= [ ] **Upgrades need to do something** Upgrading the feeder level currently has no effect
+
 ## General
 - [x] **Confirm New Game** - Add a confirmation on the new game screen so if your testing a longer run a miss click wont ruin you, also add a catch for the panick if the version has changed
 - [x] **Store tag on items** - Add a tag on every item registered thats a bool for store so we can easily filter out items that are not suppose to be in the store
