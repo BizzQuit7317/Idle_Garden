@@ -265,7 +265,7 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 - [x] Back-to-garden navigation pattern
 ### Phase 3 — Running game loop
 - [x] Main loop scaffolding
-- [ ] Tick rate decision (real-time vs accumulator-based)
+- [x] Tick rate decision (real-time vs accumulator-based)
 - [x] Pause / resume hooks
 - [x] Offline catch-up handler (with the offline-cap limit from idle_fish backlog)
 ### Phase 4 — Tick loop & subsystem contract
@@ -315,10 +315,10 @@ Written ground-up in Rust with minimal external dependencies where reasonable. E
 ### 🌻 Bed Subsystem
 - [ ] **Beds display names** - Need to add display names to the flowers instead of id
 - [ ] **Harvest all button** — single click to harvest all spots that are ready rather than clicking each one individually
-- [ ] **Sticky selection** — selected item stays selected until either a different item is chosen or the player runs out of that item, so planting a full bed of grass seeds doesn't require re-clicking after every spot
+- [x] **Sticky selection** — selected item stays selected until either a different item is chosen or the player runs out of that item, so planting a full bed of grass seeds doesn't require re-clicking after every spot
 
 ## General
-- [ ] **Confirm New Game** - Add a confirmation on the new game screen so if your testing a longer run a miss click wont ruin you, also add a catch for the panick if the version has changed
+- [x] **Confirm New Game** - Add a confirmation on the new game screen so if your testing a longer run a miss click wont ruin you, also add a catch for the panick if the version has changed
 - [x] **Store tag on items** - Add a tag on every item registered thats a bool for store so we can easily filter out items that are not suppose to be in the store
 
 ---
