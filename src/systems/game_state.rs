@@ -61,8 +61,14 @@ impl GameState {
         for slot in self.player.slots.iter_mut() {
             if let Some(subsystem) = slot {
                 let output = subsystem.tick(&ctx);
-                self.player.cash += output.cash_delta;
-                self.player.conservation_points += output.conservation_delta;
+                let cash_gain = output.cash_delta * self.player.cash_mult;
+                let cons_gain = output.conservation_delta * self.player.conservation_mult;
+
+                self.player.cash += cash_gain;
+                self.player.conservation_points += cons_gain;
+
+                self.player.cash_current_rebirth += cash_gain;
+                self.player.conservation_points_current_rebirth += cons_gain;
                 for (item, amount) in output.items_produced {
                     self.player.inventory.add(&item, amount);
                 }

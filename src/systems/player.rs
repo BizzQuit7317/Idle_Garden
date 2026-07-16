@@ -108,6 +108,12 @@ pub struct Player {
     pub cash: f64,
     pub conservation_points: f64,
 
+    pub cash_current_rebirth: f64,
+    pub conservation_points_current_rebirth: f64,
+
+    pub cash_mult: f64,
+    pub conservation_mult: f64,
+
     pub inventory: Inventory,
 
     pub family_name: String,
@@ -129,8 +135,14 @@ impl Player {
             max_slots,
             slots: (0..max_slots).map(|_| None).collect(), 
 
-            cash: 5000.0, //Start with no money
+            cash: 0.0,//5000.0, //Start with no money
             conservation_points: 0.0, //Start with no conservation
+
+            cash_current_rebirth: 0.0,
+            conservation_points_current_rebirth: 0.0,
+
+            cash_mult: 1.0, //Multiplier on base cash
+            conservation_mult: 1.0, //Multiplier for base conservaation
 
             inventory,
 
@@ -183,6 +195,38 @@ impl Player {
                 self.first_name = line.trim().to_string();
             }
         }
+    }
+
+    pub fn rebirth_calculation(&self) -> (f64, f64) { //(cash mult, cons mult)
+        let cons_mult_buffer: f64 = 1.0; //By default will return 1.0 multiplyer
+        let cash_mult_buffer: f64 = 1.0; //By default will return 1.0 multiplyer
+
+        let new_cash_mult: f64 = 1.0 + (self.cash_current_rebirth / cash_mult_buffer).sqrt();
+        let new_cons_mult: f64 = 1.0 + (self.conservation_points_current_rebirth / cons_mult_buffer).sqrt();
+
+        (new_cash_mult, new_cons_mult)
+    }
+
+    pub fn rebirth(&mut self) {
+        let (new_cash_mult, new_cons_mult) = self.rebirth_calculation();
+
+        self.cash_mult = new_cash_mult;
+        self.conservation_mult = new_cons_mult;
+
+        self.pick_name();
+        self.generation += 1;
+
+        self.slots = (0..self.max_slots).map(|_| None).collect();
+
+        self.cash_current_rebirth = 0.0;
+        self.conservation_points_current_rebirth = 0.0;
+
+        self.cash = 0.0;
+        self.conservation_points = 0.0;
+
+        //Give the player more seeds and a birdcage lol could be a potential exploit to do a shit load of rebirths to max on bird cages and sell them before pregoressing lol
+        self.inventory.add("grass_seeds", 5); //Starting the player with 5 grass seeds
+        self.inventory.add("small_cage", 1); //testing the feeder
     }
 
 }

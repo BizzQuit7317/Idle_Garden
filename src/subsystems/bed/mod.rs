@@ -39,7 +39,7 @@ impl BedSystem {
         BedSystem {
             npc_id: String::from("bed_npc"),
             bed_level: 1,
-            growing_spots: vec![system::GrowingSpot::new(); 1], //Player starts with 1 by defaults
+            growing_spots: vec![system::GrowingSpot::new(); 3], //Player starts with 3 by defaults
             selected_item: None,
             pending_plant: None,
             pending_harvest: None,
@@ -50,7 +50,7 @@ impl BedSystem {
             auto_harvested_items: HashMap::new(),
             pending_modals: vec![],
             pending_upgrade: false,
-            upgrade_price: 100.0, //base upgrade
+            upgrade_price: 50.0, //base upgrade
             automated: false, //Only available once player has  5 plots
             automate_base_cost: 1000.0, //place holder fit with number later
             pending_automate: false,

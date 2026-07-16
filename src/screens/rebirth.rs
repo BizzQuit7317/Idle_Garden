@@ -64,24 +64,26 @@ impl Screen for Rebirth {
             return ScreenTransition::Goto(Box::new(Store::new()));
         }	
 
-	//Rebirth info
-        draw_text(&format!("Some info"), sw * 0.5, sh * 0.35, 28.0, WHITE);
-	draw_text(&format!("Somoe more info"), sw * 0.5, sh * 0.4, 28.0, WHITE);
-        draw_text(&format!("Some info"), sw * 0.5, sh * 0.45, 28.0, WHITE);
-	draw_text(&format!("Somoe more info"), sw * 0.5, sh * 0.5, 28.0, WHITE);
-        draw_text(&format!("Some info"), sw * 0.5, sh * 0.55, 28.0, WHITE);
-	draw_text(&format!("Somoe more info"), sw * 0.5, sh * 0.6, 28.0, WHITE);
+	    //Rebirth info - live multiplier readout
+        draw_text(&format!("Cash Mult: {:.3}x", game.player.cash_mult), sw * 0.5, sh * 0.35, 28.0, WHITE);
+        draw_text(&format!("Conservation Mult: {:.3}x", game.player.conservation_mult), sw * 0.5, sh * 0.4, 28.0, WHITE);
+
+        draw_text(&format!("Total cash this rebirth: {:.3}", game.player.cash_current_rebirth), sw * 0.5, sh * 0.45, 28.0, WHITE);
+        draw_text(&format!("Total Conservation this rebirth: {:.3}", game.player.conservation_points_current_rebirth), sw * 0.5, sh * 0.5, 28.0, WHITE);
+
+        let (preview_cash_mult, preview_cons_mult) = game.player.rebirth_calculation();
+        draw_text(&format!("New Cash Mult Set: {:.3}x", preview_cash_mult), sw * 0.5, sh * 0.55, 28.0, WHITE);
+        draw_text(&format!("New Conservation Mult Set: {:.3}x", preview_cons_mult), sw * 0.5, sh * 0.6, 28.0, WHITE);
 
         //Rebirth Button
-	if widgets::Button::new("Rebirth")
-            .position(vec2(sw * 0.5, sh * 0.65))
-            .size(vec2(160.0, 40.0))
-            .ui(&mut root_ui())
-        {
-            game.player.pick_name();
-            game.player.generation += 1;
-        }
+	    if widgets::Button::new("Rebirth")
+                .position(vec2(sw * 0.5, sh * 0.65))
+                .size(vec2(160.0, 40.0))
+                .ui(&mut root_ui())
+            {
+                game.player.rebirth();
+            }
 
-        ScreenTransition::Stay
-    }
+            ScreenTransition::Stay
+        }
 }

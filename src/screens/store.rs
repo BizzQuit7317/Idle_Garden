@@ -112,6 +112,7 @@ impl Screen for Store {
             self.active_tab = StoreTab::CashBuy;
         }
 
+        /*
         if widgets::Button::new("Buy (Conservation)")
             .position(vec2(sw * 0.28, sh * 0.36))
             .size(vec2(190.0, 40.0))
@@ -119,6 +120,7 @@ impl Screen for Store {
         {
             self.active_tab = StoreTab::ConservationBuy;
         }
+        */ //re enable once the player has reached a certain property can worry about later
 
         if widgets::Button::new("Sell (Cash)")
             .position(vec2(sw * 0.53, sh * 0.36))
@@ -128,6 +130,7 @@ impl Screen for Store {
             self.active_tab = StoreTab::CashSell;
         }
 
+        /*
         if widgets::Button::new("Sell (Conservation)")
             .position(vec2(sw * 0.71, sh * 0.36))
             .size(vec2(190.0, 40.0))
@@ -135,6 +138,7 @@ impl Screen for Store {
         {
             self.active_tab = StoreTab::ConservationSell;
         }
+        */ //re enable once the player has reached a certain property can worry about later
 
         // ── Build SlotContext ─────────────────────────────────────────────────
         let ctx = match self.active_tab {
@@ -233,12 +237,14 @@ impl Screen for Store {
                             if *quantity > 0 {
                                 game.player.inventory.remove(item_id, 1);
                                 game.player.cash += price;
+                                game.player.cash_current_rebirth += price;
                             }
                         }
                         StoreTab::ConservationSell => {
                             if *quantity > 0 {
                                 game.player.inventory.remove(item_id, 1);
                                 game.player.conservation_points += price;
+                                game.player.conservation_points_current_rebirth += price;
                             }
                         }
                     }

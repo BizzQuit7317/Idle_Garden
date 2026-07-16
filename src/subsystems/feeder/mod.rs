@@ -98,11 +98,11 @@ macro_rules! register_item {
 register_item!("bird_feed", "Bird Feed", "Seeds and scraps left by visiting birds.", 15.0, 1.0, true, ItemRole::Core);
 register_item!("feather", "Feather", "A small feather left behind by a visiting bird.", 1.0, 1.0, false, ItemRole::Core);
 register_item!("small_cage", "Small Cage Feeder", "A small cage feeder", 1.0, 1.0, false, ItemRole::Utility);
-register_item!("medium_cage", "Medium Cage Feeder", "A medium cage feeder", 1.0, 1.0, true, ItemRole::Utility);
+register_item!("medium_cage", "Medium Cage Feeder", "A medium cage feeder", 1.0, 1.0, false, ItemRole::Utility);
 register_item!("platform", "Platform Feeder", "A flat platform feeder open to all birds", 1.0, 1.0, false, ItemRole::Utility);
-register_item!("worm", "Worm", "A juicy worms birds and fish can't resist", 1.0, 1.0, true, ItemRole::Core);
-register_item!("suet_ball", "Suet Ball", "A high-energy fat ball packed with calories for cold weather", 1.5, 1.0, true, ItemRole::Core);
-register_item!("mealworms", "Dried Mealworms", "Protein-rich dried mealworms, a favourite of insect-eating birds", 2.0, 1.0, true, ItemRole::Core);
-register_item!("peanuts", "Whole Peanuts", "Unsalted whole peanuts, best served in a mesh feeder", 1.75, 1.0, true, ItemRole::Core);
-register_item!("mixed_nibbles", "Mixed Nibbles", "A blend of dried fruit, nuts and oats for ground-feeding birds", 1.25, 1.0, true, ItemRole::Core);
-register_item!("mealworm_suet_pellets", "Mealworm Suet Pellets", "Compact suet pellets studded with dried mealworms", 1.8, 1.0, true, ItemRole::Core);
+register_item!("worm", "Worm", "A juicy worms birds and fish can't resist", 1.0, 1.0, false, ItemRole::Core);
+register_item!("suet_ball", "Suet Ball", "A high-energy fat ball packed with calories for cold weather", 2.0, 1.0, true, ItemRole::Core);
+register_item!("mealworms", "Dried Mealworms", "Protein-rich dried mealworms, a favourite of insect-eating birds", 5.0, 1.0, true, ItemRole::Core);
+register_item!("peanuts", "Whole Peanuts", "Unsalted whole peanuts, best served in a mesh feeder", 10.0, 1.0, true, ItemRole::Core);
+register_item!("mixed_nibbles", "Mixed Nibbles", "A blend of dried fruit, nuts and oats for ground-feeding birds", 50.0, 1.0, true, ItemRole::Core);
+register_item!("mealworm_suet_pellets", "Mealworm Suet Pellets", "Compact suet pellets studded with dried mealworms", 75.0, 1.0, true, ItemRole::Core);
