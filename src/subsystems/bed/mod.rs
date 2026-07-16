@@ -9,6 +9,7 @@ use crate::systems::player::Property;
 use std::collections::HashMap;
 use crate::systems::npc::NPC;
 use crate::systems::popup::Modal;
+use crate::subsystems::ItemRole;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BedSystem {
@@ -77,7 +78,7 @@ inventory::submit!(SubsystemRegistration {
 });
 
 macro_rules! register_item {
-    ($id:expr, $display:expr, $desc:expr, $cash:expr, $conservation:expr, $store:expr) => {
+    ($id:expr, $display:expr, $desc:expr, $cash:expr, $conservation:expr, $store:expr, $role:expr) => {
         inventory::submit!(ItemDefinition {
             id: $id,
             display_name: $display,
@@ -85,36 +86,37 @@ macro_rules! register_item {
             cash_value: $cash,
             conservation_value: $conservation,
             in_store: $store,
+            item_role: $role
         });
     }
 }
 
 // Tier 1 - Grass
-register_item!("grass_seeds", "Grass Seeds", "Grass seeds, what else?", 1.0, 1.0, true);
-register_item!("grass", "Grass", "Regular degular grass buddy.", 3.0, 1.0, false);
+register_item!("grass_seeds", "Grass Seeds", "Grass seeds, what else?", 1.0, 1.0, true, ItemRole::Core);
+register_item!("grass", "Grass", "Regular degular grass buddy.", 3.0, 1.0, false, ItemRole::Core);
 
 // Tier 2 - Blue Flower
-register_item!("blue_flower_seed", "Blue Flower Seed", "A small seed for a blue flower.", 5.0, 2.0, true);
-register_item!("blue_flower", "Blue Flower", "A pretty blue flower.", 12.0, 2.0, false);
+register_item!("blue_flower_seed", "Blue Flower Seed", "A small seed for a blue flower.", 5.0, 2.0, true, ItemRole::Core);
+register_item!("blue_flower", "Blue Flower", "A pretty blue flower.", 12.0, 2.0, false, ItemRole::Core);
 
 // Tier 3 - Sunflower
-register_item!("sunflower_seed", "Sunflower Seed", "A big cheerful seed.", 15.0, 3.0, true);
-register_item!("sunflower", "Sunflower", "Tall and bright.", 35.0, 3.0, false);
+register_item!("sunflower_seed", "Sunflower Seed", "A big cheerful seed.", 15.0, 3.0, true, ItemRole::Core);
+register_item!("sunflower", "Sunflower", "Tall and bright.", 35.0, 3.0, false, ItemRole::Core);
 
 // Tier 4 - Rose
-register_item!("rose_seed", "Rose Seed", "A delicate seed.", 45.0, 5.0, true);
-register_item!("rose", "Rose", "A beautiful rose.", 100.0, 5.0, false);
+register_item!("rose_seed", "Rose Seed", "A delicate seed.", 45.0, 5.0, true, ItemRole::Core);
+register_item!("rose", "Rose", "A beautiful rose.", 100.0, 5.0, false, ItemRole::Core);
 
 // Tier 5 - Orchid
-register_item!("orchid_seed", "Orchid Seed", "A rare and fussy seed.", 130.0, 8.0, true);
-register_item!("orchid", "Orchid", "An exotic orchid.", 300.0, 8.0, false);
+register_item!("orchid_seed", "Orchid Seed", "A rare and fussy seed.", 130.0, 8.0, true, ItemRole::Core);
+register_item!("orchid", "Orchid", "An exotic orchid.", 300.0, 8.0, false, ItemRole::Core);
 
 // Seeds from birds - Pumpkin
-register_item!("pumpkin_seed", "Pumpkin Seed", "A seed that grows a pumpkin.", 130.0, 8.0, false);
-register_item!("pumpkin", "Pumpkin", "A Pumpkin.", 300.0, 8.0, false);
+register_item!("pumpkin_seed", "Pumpkin Seed", "A seed that grows a pumpkin.", 130.0, 8.0, false, ItemRole::Core);
+register_item!("pumpkin", "Pumpkin", "A Pumpkin.", 300.0, 8.0, false, ItemRole::Core);
 
 // Utility
-register_item!("mulch", "Mulch", "Plant waste.", 0.0, 2.0, false);
-register_item!("compost", "Compost", "Helps seeds sprout and establish faster.", 8.0, 3.0, false);
-register_item!("plant_feed", "Plant Feed", "A liquid feed that speeds up all growth stages.", 25.0, 5.0, false);
-register_item!("growth_powder", "Growth Powder", "Makes plants grow quicker at all stages.", 100.0, 200.0, false);
+register_item!("mulch", "Mulch", "Plant waste.", 0.0, 2.0, true, ItemRole::Boost);
+register_item!("compost", "Compost", "Helps seeds sprout and establish faster.", 8.0, 3.0, true, ItemRole::Boost);
+register_item!("plant_feed", "Plant Feed", "A liquid feed that speeds up all growth stages.", 25.0, 5.0, true, ItemRole::Boost);
+register_item!("growth_powder", "Growth Powder", "Makes plants grow quicker at all stages.", 100.0, 200.0, true, ItemRole::Boost);

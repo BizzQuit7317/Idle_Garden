@@ -43,6 +43,15 @@ impl Screen for Store {
 
         // ── Everything below here is UNCHANGED from original ──────────────────
 
+        //TEST BUTTON FOR REROLLING STORE
+        if widgets::Button::new("Reroll")
+            .position(vec2(sw * 0.9, sh * 0.9))
+            .size(vec2(200.0, 80.0))
+            .ui(&mut root_ui())
+        {
+            game.store.build_stock();
+        }
+
         draw_text(&format!("Cash: {:.2}", game.player.cash), sw * 0.05, sh * 0.05, 28.0, WHITE);
         draw_text(&format!("Conservation: {:.2}", game.player.conservation_points), sw * 0.3, sh * 0.05, 28.0, WHITE);
 

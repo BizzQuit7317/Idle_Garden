@@ -37,5 +37,70 @@
             "Corvids": 0.6,
             "Raptors": 0.5
         }
+    },
+    {
+        "food_id": "suet_ball",
+        "display_name": "Suet Ball",
+        "quantity": 25,
+        "decay_rate": 45.0,
+        "attractiveness": {
+            "SmallPearching": 0.8,
+            "Starlings": 0.7,
+            "Doves": 0.2,
+            "Corvids": 0.4,
+            "Raptors": 0.0
+        }
+    },
+    {
+        "food_id": "mealworms",
+        "display_name": "Dried Mealworms",
+        "quantity": 35,
+        "decay_rate": 40.0,
+        "attractiveness": {
+            "SmallPearching": 0.6,
+            "Starlings": 0.6,
+            "Doves": 0.3,
+            "Corvids": 0.5,
+            "Raptors": 0.3
+        }
+    },
+    {
+        "food_id": "peanuts",
+        "display_name": "Whole Peanuts",
+        "quantity": 30,
+        "decay_rate": 50.0,
+        "attractiveness": {
+            "SmallPearching": 0.7,
+            "Starlings": 0.3,
+            "Doves": 0.1,
+            "Corvids": 0.6,
+            "Raptors": 0.0
+        }
+    },
+    {
+        "food_id": "mixed_nibbles",
+        "display_name": "Mixed Nibbles",
+        "quantity": 30,
+        "decay_rate": 55.0,
+        "attractiveness": {
+            "SmallPearching": 0.5,
+            "Starlings": 0.4,
+            "Doves": 0.6,
+            "Corvids": 0.3,
+            "Raptors": 0.0
+        }
+    },
+    {
+        "food_id": "mealworm_suet_pellets",
+        "display_name": "Mealworm Suet Pellets",
+        "quantity": 25,
+        "decay_rate": 40.0,
+        "attractiveness": {
+            "SmallPearching": 0.7,
+            "Starlings": 0.6,
+            "Doves": 0.2,
+            "Corvids": 0.4,
+            "Raptors": 0.1
+        }
     }
 ]

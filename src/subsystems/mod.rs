@@ -1,9 +1,17 @@
 use std::fmt::Debug;
 use std::collections::HashMap;
+use serde::{Serialize, Deserialize};
 
 use crate::systems::player::Property;
 use crate::systems::npc::NPC;
 use crate::systems::popup::Modal;
+
+#[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq)]
+pub enum ItemRole {
+    Core,
+    Utility,
+    Boost,
+}
 
 pub struct  ResourceContext {
     pub cash: f64,
@@ -39,6 +47,7 @@ pub struct ItemDefinition {
     pub cash_value: f64,
     pub conservation_value: f64,
     pub in_store: bool,
+    pub item_role: ItemRole,
 }
 
 inventory::collect!(ItemDefinition);

@@ -9,6 +9,7 @@ use crate::systems::player::Property;
 use std::collections::HashMap;
 use crate::systems::npc::NPC;
 use crate::systems::popup::Modal;
+use crate::subsystems::ItemRole;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FeederSystem {
@@ -81,7 +82,7 @@ inventory::submit!(SubsystemRegistration {
 });
 
 macro_rules! register_item {
-    ($id:expr, $display:expr, $desc:expr, $cash:expr, $conservation:expr, $store:expr) => {
+    ($id:expr, $display:expr, $desc:expr, $cash:expr, $conservation:expr, $store:expr, $role:expr) => {
         inventory::submit!(ItemDefinition {
             id: $id,
             display_name: $display,
@@ -89,13 +90,19 @@ macro_rules! register_item {
             cash_value: $cash,
             conservation_value: $conservation,
             in_store: $store,
+            item_role: $role
         });
     }
 }
 
-register_item!("bird_feed", "Bird Feed", "Seeds and scraps left by visiting birds.", 15.0, 1.0, true);
-register_item!("feather", "Feather", "A small feather left behind by a visiting bird.", 1.0, 1.0, false);
-register_item!("small_cage", "Small Cage Feeder", "A small cage feeder", 1.0, 1.0, false);
-register_item!("medium_cage", "Medium Cage Feeder", "A medium cage feeder", 1.0, 1.0, false);
-register_item!("platform", "Platform Feeder", "A flat platform feeder open to all birds", 1.0, 1.0, false);
-register_item!("worm", "Worm", "A juicy worms birds and fish can't resist", 1.0, 1.0, false);
+register_item!("bird_feed", "Bird Feed", "Seeds and scraps left by visiting birds.", 15.0, 1.0, true, ItemRole::Core);
+register_item!("feather", "Feather", "A small feather left behind by a visiting bird.", 1.0, 1.0, false, ItemRole::Core);
+register_item!("small_cage", "Small Cage Feeder", "A small cage feeder", 1.0, 1.0, false, ItemRole::Utility);
+register_item!("medium_cage", "Medium Cage Feeder", "A medium cage feeder", 1.0, 1.0, true, ItemRole::Utility);
+register_item!("platform", "Platform Feeder", "A flat platform feeder open to all birds", 1.0, 1.0, false, ItemRole::Utility);
+register_item!("worm", "Worm", "A juicy worms birds and fish can't resist", 1.0, 1.0, true, ItemRole::Core);
+register_item!("suet_ball", "Suet Ball", "A high-energy fat ball packed with calories for cold weather", 1.5, 1.0, true, ItemRole::Core);
+register_item!("mealworms", "Dried Mealworms", "Protein-rich dried mealworms, a favourite of insect-eating birds", 2.0, 1.0, true, ItemRole::Core);
+register_item!("peanuts", "Whole Peanuts", "Unsalted whole peanuts, best served in a mesh feeder", 1.75, 1.0, true, ItemRole::Core);
+register_item!("mixed_nibbles", "Mixed Nibbles", "A blend of dried fruit, nuts and oats for ground-feeding birds", 1.25, 1.0, true, ItemRole::Core);
+register_item!("mealworm_suet_pellets", "Mealworm Suet Pellets", "Compact suet pellets studded with dried mealworms", 1.8, 1.0, true, ItemRole::Core);
